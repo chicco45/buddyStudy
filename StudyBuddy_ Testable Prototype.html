@@ -1,0 +1,1243 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+<title>StudyBuddy — Testable Prototype</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --primary:#2563EB;
+    --primary-dark:#1D4ED8;
+    --secondary:#10B981;
+    --accent:#F59E0B;
+    --bg:#F9FAFB;
+    --text:#111827;
+    --muted:#6B7280;
+    --border:#E5E7EB;
+    --error:#EF4444;
+    --card:#FFFFFF;
+    --shadow:0 1px 3px rgba(0,0,0,.06),0 1px 2px rgba(0,0,0,.04);
+    --shadow-lg:0 10px 25px rgba(0,0,0,.08);
+    --radius:14px;
+    --radius-sm:10px;
+  }
+  *{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent;}
+  html,body{height:100%;}
+  body{
+    font-family:'Inter',system-ui,-apple-system,sans-serif;
+    background:#0F172A;
+    color:var(--text);
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    min-height:100vh;
+    padding:20px;
+  }
+  .phone{
+    width:390px;
+    height:844px;
+    background:var(--bg);
+    border-radius:44px;
+    position:relative;
+    overflow:hidden;
+    box-shadow:0 0 0 12px #1E293B, 0 0 0 14px #0F172A, 0 30px 60px rgba(0,0,0,.5);
+    display:flex;
+    flex-direction:column;
+  }
+  .notch{
+    position:absolute;top:0;left:50%;transform:translateX(-50%);
+    width:150px;height:28px;background:#0F172A;
+    border-radius:0 0 18px 18px;z-index:100;
+  }
+  .status-bar{
+    height:44px;display:flex;align-items:center;justify-content:space-between;
+    padding:0 24px;font-size:13px;font-weight:600;color:var(--text);
+    flex-shrink:0;z-index:50;
+  }
+  .status-bar .icons{display:flex;gap:5px;align-items:center;font-size:12px;}
+
+  .screen{
+    flex:1;
+    overflow-y:auto;
+    overflow-x:hidden;
+    position:relative;
+    display:none;
+    flex-direction:column;
+    scrollbar-width:none;
+  }
+  .screen::-webkit-scrollbar{display:none;}
+  .screen.active{display:flex;animation:fade .25s ease;}
+  @keyframes fade{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}
+
+  .app-header{
+    padding:8px 20px 16px;
+    display:flex;align-items:center;gap:12px;
+    background:var(--bg);
+    position:sticky;top:0;z-index:20;
+  }
+  .app-header h1{font-size:22px;font-weight:800;letter-spacing:-.02em;}
+  .app-header .sub{font-size:13px;color:var(--muted);font-weight:500;margin-top:2px;}
+  .back-btn{
+    width:40px;height:40px;border-radius:50%;border:none;background:#fff;
+    display:flex;align-items:center;justify-content:center;cursor:pointer;
+    box-shadow:var(--shadow);font-size:18px;color:var(--text);flex-shrink:0;
+    transition:transform .15s;
+  }
+  .back-btn:active{transform:scale(.92);}
+
+  .content{padding:0 20px 100px;flex:1;}
+
+  .btn{
+    width:100%;height:52px;border:none;border-radius:var(--radius-sm);
+    font-family:inherit;font-size:16px;font-weight:700;cursor:pointer;
+    display:flex;align-items:center;justify-content:center;gap:8px;
+    transition:transform .12s,opacity .12s;
+    min-height:48px;
+  }
+  .btn:active{transform:scale(.97);}
+  .btn-primary{background:var(--primary);color:#fff;box-shadow:0 6px 16px rgba(37,99,235,.28);}
+  .btn-primary:hover{background:var(--primary-dark);}
+  .btn-secondary{background:#fff;color:var(--primary);border:2px solid var(--primary);}
+  .btn-ghost{background:transparent;color:var(--primary);font-weight:600;}
+  .btn-success{background:var(--secondary);color:#fff;box-shadow:0 6px 16px rgba(16,185,129,.28);}
+  .btn-accent{background:var(--accent);color:#fff;}
+  .btn:disabled{opacity:.45;cursor:not-allowed;transform:none;}
+
+  .field{margin-bottom:14px;}
+  .field label{display:block;font-size:13px;font-weight:600;color:var(--text);margin-bottom:6px;}
+  .input{
+    width:100%;height:52px;border:2px solid var(--border);border-radius:var(--radius-sm);
+    padding:0 16px;font-family:inherit;font-size:15px;background:#fff;color:var(--text);
+    transition:border-color .15s,box-shadow .15s;
+  }
+  .input:focus{outline:none;border-color:var(--primary);box-shadow:0 0 0 4px rgba(37,99,235,.12);}
+  .input.error{border-color:var(--error);}
+  .error-msg{font-size:12px;color:var(--error);margin-top:5px;font-weight:500;display:none;}
+  .error-msg.show{display:block;}
+
+  .chip-row{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:16px;}
+  .chip{
+    padding:10px 16px;border-radius:999px;border:2px solid var(--border);background:#fff;
+    font-size:14px;font-weight:600;color:var(--muted);cursor:pointer;
+    transition:all .15s;min-height:40px;display:flex;align-items:center;
+  }
+  .chip:active{transform:scale(.95);}
+  .chip.selected{background:var(--primary);border-color:var(--primary);color:#fff;}
+  .chip.filter.selected{background:var(--accent);border-color:var(--accent);color:#fff;}
+
+  .card{
+    background:var(--card);border-radius:var(--radius);padding:16px;
+    box-shadow:var(--shadow);margin-bottom:12px;transition:transform .12s;
+    border:1px solid var(--border);
+  }
+  .card.tap{cursor:pointer;}
+  .card.tap:active{transform:scale(.985);}
+  .card-title{font-size:16px;font-weight:700;margin-bottom:4px;}
+  .card-sub{font-size:13px;color:var(--muted);font-weight:500;}
+  .card-meta{display:flex;gap:12px;margin-top:10px;font-size:12px;color:var(--muted);flex-wrap:wrap;}
+  .card-meta span{display:flex;align-items:center;gap:4px;}
+
+  .section-title{
+    font-size:15px;font-weight:700;margin:22px 0 12px;display:flex;
+    align-items:center;justify-content:space-between;
+  }
+  .section-title .link{font-size:13px;color:var(--primary);font-weight:600;cursor:pointer;}
+
+  .bottom-nav{
+    position:absolute;bottom:0;left:0;right:0;height:76px;
+    background:#fff;border-top:1px solid var(--border);
+    display:none;align-items:center;justify-content:space-around;
+    padding:0 8px 10px;z-index:60;
+  }
+  .bottom-nav.show{display:flex;}
+  .nav-item{
+    display:flex;flex-direction:column;align-items:center;gap:3px;
+    background:none;border:none;cursor:pointer;font-family:inherit;
+    font-size:10px;font-weight:600;color:var(--muted);padding:8px 6px;
+    border-radius:10px;transition:color .15s;min-width:56px;min-height:48px;
+    justify-content:center;
+  }
+  .nav-item .ico{font-size:20px;line-height:1;}
+  .nav-item.active{color:var(--primary);}
+  .nav-item:active{background:#F3F4F6;}
+
+  .progress{height:8px;background:var(--border);border-radius:999px;overflow:hidden;margin-top:8px;}
+  .progress > div{height:100%;background:var(--secondary);border-radius:999px;transition:width .4s;}
+
+  .avatar{
+    width:48px;height:48px;border-radius:50%;background:linear-gradient(135deg,var(--primary),#7C3AED);
+    display:flex;align-items:center;justify-content:center;color:#fff;
+    font-weight:700;font-size:17px;flex-shrink:0;
+  }
+  .avatar.sm{width:38px;height:38px;font-size:14px;}
+
+  .row{display:flex;align-items:center;gap:12px;}
+  .row.between{justify-content:space-between;}
+
+  .toast{
+    position:absolute;bottom:96px;left:50%;transform:translateX(-50%) translateY(20px);
+    background:var(--text);color:#fff;padding:12px 20px;border-radius:999px;
+    font-size:14px;font-weight:600;opacity:0;pointer-events:none;
+    transition:all .3s;z-index:200;white-space:nowrap;box-shadow:var(--shadow-lg);
+  }
+  .toast.show{opacity:1;transform:translateX(-50%) translateY(0);}
+  .toast.success{background:var(--secondary);}
+  .toast.error{background:var(--error);}
+
+  .tabs{display:flex;gap:4px;background:#F3F4F6;padding:4px;border-radius:12px;margin-bottom:16px;}
+  .tab{
+    flex:1;padding:10px;border:none;background:transparent;border-radius:9px;
+    font-family:inherit;font-size:14px;font-weight:600;color:var(--muted);
+    cursor:pointer;transition:all .15s;min-height:44px;
+  }
+  .tab.active{background:#fff;color:var(--text);box-shadow:var(--shadow);}
+
+  .slot-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-top:8px;}
+  .slot{
+    padding:12px 6px;border:2px solid var(--border);border-radius:var(--radius-sm);
+    background:#fff;font-size:13px;font-weight:600;color:var(--text);cursor:pointer;
+    text-align:center;transition:all .15s;min-height:44px;
+  }
+  .slot.selected{background:var(--primary);border-color:var(--primary);color:#fff;}
+  .slot.unavailable{opacity:.35;cursor:not-allowed;text-decoration:line-through;}
+
+  .streak-card{
+    background:linear-gradient(135deg,var(--primary),#7C3AED);
+    border-radius:var(--radius);padding:18px;color:#fff;margin-bottom:16px;
+    box-shadow:0 8px 20px rgba(37,99,235,.25);
+  }
+  .streak-card .big{font-size:32px;font-weight:800;letter-spacing:-.03em;}
+  .streak-card .lbl{font-size:13px;opacity:.9;font-weight:500;}
+
+  .success-wrap{
+    flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;
+    text-align:center;padding:40px 24px;
+  }
+  .success-icon{
+    width:88px;height:88px;border-radius:50%;background:var(--secondary);
+    display:flex;align-items:center;justify-content:center;font-size:44px;color:#fff;
+    margin-bottom:20px;animation:pop .4s cubic-bezier(.34,1.56,.64,1);
+    box-shadow:0 10px 30px rgba(16,185,129,.35);
+  }
+  @keyframes pop{from{transform:scale(0)}to{transform:scale(1)}}
+
+  .cal-grid{display:grid;grid-template-columns:repeat(7,1fr);gap:6px;margin-top:8px;}
+  .cal-day{
+    aspect-ratio:1;border-radius:9px;display:flex;flex-direction:column;
+    align-items:center;justify-content:center;font-size:13px;font-weight:600;
+    background:#fff;border:1px solid var(--border);cursor:pointer;transition:all .15s;
+    color:var(--text);min-height:44px;position:relative;
+  }
+  .cal-day:active{transform:scale(.94);}
+  .cal-day.today{border-color:var(--primary);color:var(--primary);}
+  .cal-day.has-session::after{
+    content:'';position:absolute;bottom:5px;width:5px;height:5px;border-radius:50%;
+    background:var(--accent);
+  }
+  .cal-day.selected{background:var(--primary);color:#fff;border-color:var(--primary);}
+  .cal-day.empty{background:transparent;border:none;cursor:default;}
+
+  .fab{
+    position:absolute;bottom:96px;right:20px;width:56px;height:56px;border-radius:50%;
+    background:var(--primary);color:#fff;border:none;font-size:26px;cursor:pointer;
+    box-shadow:0 8px 20px rgba(37,99,235,.35);display:flex;align-items:center;
+    justify-content:center;z-index:70;transition:transform .15s;
+  }
+  .fab:active{transform:scale(.9);}
+
+  .stars{color:var(--accent);font-size:13px;letter-spacing:1px;}
+
+  .empty{
+    text-align:center;padding:40px 20px;color:var(--muted);
+    font-size:14px;font-weight:500;
+  }
+  .empty .em{font-size:40px;margin-bottom:10px;display:block;opacity:.5;}
+
+  .screen-title{font-size:26px;font-weight:800;letter-spacing:-.03em;margin-bottom:4px;}
+  .screen-sub{font-size:14px;color:var(--muted);font-weight:500;margin-bottom:20px;}
+
+  .splash{
+    flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;
+    padding:40px 30px;text-align:center;
+    background:linear-gradient(160deg,#2563EB 0%,#7C3AED 100%);
+    color:#fff;margin:-0px;
+  }
+  .splash .logo{
+    width:96px;height:96px;border-radius:26px;background:rgba(255,255,255,.15);
+    backdrop-filter:blur(10px);display:flex;align-items:center;justify-content:center;
+    font-size:48px;margin-bottom:22px;border:1px solid rgba(255,255,255,.25);
+  }
+  .splash h1{font-size:34px;font-weight:800;letter-spacing:-.03em;margin-bottom:8px;}
+  .splash p{font-size:15px;opacity:.9;font-weight:500;margin-bottom:36px;max-width:260px;line-height:1.5;}
+  .splash .btn-primary{background:#fff;color:var(--primary);box-shadow:0 8px 24px rgba(0,0,0,.2);}
+  .splash .btn-ghost{color:#fff;margin-top:12px;}
+  .splash-dots{display:flex;gap:6px;margin-top:28px;}
+  .splash-dots span{width:7px;height:7px;border-radius:50%;background:rgba(255,255,255,.4);}
+  .splash-dots span.on{background:#fff;width:20px;border-radius:999px;}
+
+  @media (max-width:430px){
+    body{padding:0;background:var(--bg);}
+    .phone{width:100vw;height:100vh;border-radius:0;box-shadow:none;}
+    .notch{display:none;}
+  }
+
+  @media (max-width:430px){body{padding:0;min-height:100dvh}.phone{width:100%;height:100dvh;border-radius:0;box-shadow:none}.notch,.status-bar{display:none}}
+</style>
+</head>
+<body>
+
+<div class="phone">
+  <div class="notch"></div>
+
+  <!-- Status bar -->
+  <div class="status-bar">
+    <span id="clock">9:41</span>
+    <span class="icons">📶 📡 🔋</span>
+  </div>
+
+  <!-- ================= SCREEN 1: SPLASH ================= -->
+  <div class="screen active" id="s1">
+    <div class="splash">
+      <div class="logo">📚</div>
+      <h1>StudyBuddy</h1>
+      <p>Find study partners, book peer tutors, share resources, and stay accountable — all in one place.</p>
+      <button class="btn btn-primary" onclick="go('s2')">Get Started</button>
+      <button class="btn btn-ghost" onclick="go('s2','login')">I already have an account</button>
+      <div class="splash-dots">
+        <span class="on"></span><span></span><span></span>
+      </div>
+    </div>
+  </div>
+
+  <!-- ================= SCREEN 2: SIGN UP / LOGIN ================= -->
+  <div class="screen" id="s2">
+    <div class="app-header">
+      <button class="back-btn" onclick="go('s1')">←</button>
+      <div style="flex:1;">
+        <h1 style="font-size:20px;">Welcome 👋</h1>
+        <div class="sub">Sign up or log in to continue</div>
+      </div>
+    </div>
+    <div class="content" style="padding-top:0;">
+      <div class="tabs" style="margin-bottom:24px;">
+        <button class="tab active" id="tab-signup" onclick="switchAuth('signup')">Sign Up</button>
+        <button class="tab" id="tab-login" onclick="switchAuth('login')">Login</button>
+      </div>
+
+      <!-- Sign up form -->
+      <div id="form-signup">
+        <div class="field">
+          <label>Full Name</label>
+          <input class="input" id="su-name" placeholder="e.g. Sapalo Johannes" />
+          <div class="error-msg" id="err-su-name">Please enter your full name</div>
+        </div>
+        <div class="field">
+          <label>Student Number</label>
+          <input class="input" id="su-num" placeholder="e.g. 222016515" inputmode="numeric" />
+          <div class="error-msg" id="err-su-num">Please enter a valid student number</div>
+        </div>
+        <div class="field">
+          <label>University Email</label>
+          <input class="input" id="su-email" placeholder="e.g. you@unam.na" type="email" />
+          <div class="error-msg" id="err-su-email">Please enter a valid email</div>
+        </div>
+        <div class="field">
+          <label>Password</label>
+          <input class="input" id="su-pass" placeholder="Min. 6 characters" type="password" />
+          <div class="error-msg" id="err-su-pass">Password must be at least 6 characters</div>
+        </div>
+        <button class="btn btn-primary" style="margin-top:8px;" onclick="submitSignup()">Create Account</button>
+      </div>
+
+      <!-- Login form -->
+      <div id="form-login" style="display:none;">
+        <div class="field">
+          <label>Student Number or Email</label>
+          <input class="input" id="li-id" placeholder="e.g. 222016515" />
+          <div class="error-msg" id="err-li-id">Please enter your student number or email</div>
+        </div>
+        <div class="field">
+          <label>Password</label>
+          <input class="input" id="li-pass" placeholder="Your password" type="password" />
+          <div class="error-msg" id="err-li-pass">Please enter your password</div>
+        </div>
+        <button class="btn btn-primary" style="margin-top:8px;" onclick="submitLogin()">Log In</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ================= SCREEN 3: MODULE SELECTION ================= -->
+  <div class="screen" id="s3">
+    <div class="app-header">
+      <button class="back-btn" onclick="go('s2')">←</button>
+      <div style="flex:1;"><h1 style="font-size:20px;">Select Modules</h1></div>
+    </div>
+    <div class="content">
+      <div class="screen-sub">Choose the modules you're taking this semester. We'll use this to find your study groups and tutors.</div>
+      <input class="input" placeholder="🔍 Search modules..." oninput="filterModules(this.value)" style="margin-bottom:16px;" />
+      <div class="chip-row" id="module-chips"></div>
+      <div style="height:8px;"></div>
+      <button class="btn btn-primary" onclick="submitModules()">Done (<span id="module-count">0</span> selected)</button>
+    </div>
+  </div>
+
+  <!-- ================= SCREEN 4: HOME DASHBOARD ================= -->
+  <div class="screen" id="s4">
+    <div class="app-header">
+      <div style="flex:1;">
+        <h1>Hi, <span id="home-name">Student</span> 👋</h1>
+        <div class="sub">Let's make today productive</div>
+      </div>
+      <div class="avatar sm" id="home-avatar">S</div>
+    </div>
+    <div class="content">
+      <div class="streak-card">
+        <div class="row between">
+          <div>
+            <div class="big" id="streak-num">🔥 5</div>
+            <div class="lbl">Day study streak</div>
+          </div>
+          <div style="text-align:right;">
+            <div class="big" style="font-size:22px;" id="weekly-goal">3/5</div>
+            <div class="lbl">Weekly goal</div>
+          </div>
+        </div>
+        <div class="progress" style="background:rgba(255,255,255,.25);"><div style="width:60%;background:#fff;"></div></div>
+      </div>
+
+      <div class="section-title">Quick Actions</div>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;">
+        <div class="card tap" onclick="go('s5')" style="text-align:center;padding:18px 10px;">
+          <div style="font-size:26px;">👥</div>
+          <div style="font-weight:700;font-size:14px;margin-top:6px;">Find Group</div>
+        </div>
+        <div class="card tap" onclick="go('s7')" style="text-align:center;padding:18px 10px;">
+          <div style="font-size:26px;">🎓</div>
+          <div style="font-weight:700;font-size:14px;margin-top:6px;">Book Tutor</div>
+        </div>
+      </div>
+
+      <div class="section-title">Upcoming Sessions <span class="link" onclick="go('s11')">View all</span></div>
+      <div id="home-sessions"></div>
+
+      <div class="section-title">Your Groups <span class="link" onclick="go('s5')">Browse</span></div>
+      <div id="home-groups"></div>
+    </div>
+  </div>
+
+  <!-- ================= SCREEN 5: FIND GROUPS ================= -->
+  <div class="screen" id="s5">
+    <div class="app-header">
+      <button class="back-btn" onclick="go('s4')">←</button>
+      <div style="flex:1;"><h1 style="font-size:22px;">Find Groups</h1></div>
+    </div>
+    <div class="content">
+      <input class="input" placeholder="🔍 Search groups..." oninput="filterGroups(this.value)" style="margin-bottom:12px;" />
+      <div class="chip-row" id="group-filters"></div>
+      <div id="group-list"></div>
+    </div>
+  </div>
+
+  <!-- ================= SCREEN 6: GROUP DETAIL / CHAT ================= -->
+  <div class="screen" id="s6">
+    <div class="app-header">
+      <button class="back-btn" onclick="go('s5')">←</button>
+      <div style="flex:1;"><h1 style="font-size:19px;" id="g-name">Group</h1><div class="sub" id="g-mod">Module</div></div>
+    </div>
+    <div class="content">
+      <div class="tabs">
+        <button class="tab active" onclick="switchGroupTab('about',this)">About</button>
+        <button class="tab" onclick="switchGroupTab('chat',this)">Chat</button>
+        <button class="tab" onclick="switchGroupTab('resources',this)">Resources</button>
+      </div>
+
+      <div id="g-tab-about">
+        <div class="card">
+          <div class="card-title">📋 About this group</div>
+          <p style="font-size:14px;color:var(--muted);line-height:1.6;margin-top:6px;" id="g-desc"></p>
+          <div class="card-meta" style="margin-top:12px;">
+            <span>👥 <span id="g-members">0</span> members</span>
+            <span>📍 <span id="g-loc">Library</span></span>
+            <span>🕐 <span id="g-time">Fridays 14:00</span></span>
+          </div>
+        </div>
+        <button class="btn btn-primary" id="g-join-btn" onclick="joinGroup()">Join Group</button>
+      </div>
+
+      <div id="g-tab-chat" style="display:none;">
+        <div id="chat-list" style="display:flex;flex-direction:column;gap:10px;padding-bottom:80px;"></div>
+        <div style="position:absolute;bottom:16px;left:20px;right:20px;display:flex;gap:8px;background:var(--bg);padding-top:8px;">
+          <input class="input" id="chat-input" placeholder="Type a message..." style="flex:1;" onkeydown="if(event.key==='Enter')sendMsg()" />
+          <button class="btn btn-primary" style="width:52px;padding:0;" onclick="sendMsg()">➤</button>
+        </div>
+      </div>
+
+      <div id="g-tab-resources" style="display:none;">
+        <div id="group-resources"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ================= SCREEN 7: FIND A TUTOR ================= -->
+  <div class="screen" id="s7">
+    <div class="app-header">
+      <button class="back-btn" onclick="go('s4')">←</button>
+      <div style="flex:1;"><h1 style="font-size:22px;">Find a Tutor</h1></div>
+    </div>
+    <div class="content">
+      <input class="input" placeholder="🔍 Search tutors..." oninput="filterTutors(this.value)" style="margin-bottom:12px;" />
+      <div class="chip-row" id="tutor-filters"></div>
+      <div id="tutor-list"></div>
+    </div>
+  </div>
+
+  <!-- ================= SCREEN 8: TUTOR PROFILE & BOOK ================= -->
+  <div class="screen" id="s8">
+    <div class="app-header">
+      <button class="back-btn" onclick="go('s7')">←</button>
+      <div style="flex:1;"><h1 style="font-size:19px;">Tutor Profile</h1></div>
+    </div>
+    <div class="content" id="tutor-profile-content">
+      <!-- injected -->
+    </div>
+  </div>
+
+  <!-- ================= SCREEN 9: BOOKING CONFIRMATION ================= -->
+  <div class="screen" id="s9">
+    <div class="app-header">
+      <button class="back-btn" onclick="go('s8')">←</button>
+      <div style="flex:1;"><h1 style="font-size:19px;">Booking Confirmed</h1></div>
+    </div>
+    <div class="content" style="display:flex;flex-direction:column;align-items:center;justify-content:center;padding-bottom:40px;">
+      <div class="success-wrap" style="padding:20px 0;">
+        <div class="success-icon">✓</div>
+        <h1 style="font-size:24px;font-weight:800;letter-spacing:-.02em;">Session Booked!</h1>
+        <p style="color:var(--muted);font-size:15px;margin-top:8px;line-height:1.5;" id="confirm-text">
+          Your tutoring session has been confirmed.
+        </p>
+        <div class="card" style="width:100%;text-align:left;margin-top:24px;" id="confirm-card"></div>
+        <button class="btn btn-primary" style="margin-top:16px;" onclick="go('s4')">Back to Home</button>
+        <button class="btn btn-ghost" onclick="toast('Added to calendar ✓')">Add to Calendar</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ================= SCREEN 10: NOTES & RESOURCES ================= -->
+  <div class="screen" id="s10">
+    <div class="app-header">
+      <button class="back-btn" onclick="go('s4')">←</button>
+      <div style="flex:1;"><h1 style="font-size:22px;">Resources</h1></div>
+    </div>
+    <div class="content">
+      <input class="input" placeholder="🔍 Search resources..." oninput="filterResources(this.value)" style="margin-bottom:12px;" />
+      <div class="chip-row" id="resource-filters"></div>
+      <div id="resource-list"></div>
+    </div>
+    <button class="fab" onclick="toast('Upload flow opened 📤')">+</button>
+  </div>
+
+  <!-- ================= SCREEN 11: STUDY PLANNER ================= -->
+  <div class="screen" id="s11">
+    <div class="app-header">
+      <button class="back-btn" onclick="go('s4')">←</button>
+      <div style="flex:1;"><h1 style="font-size:22px;">Study Planner</h1></div>
+    </div>
+    <div class="content">
+      <div class="card">
+        <div class="row between" style="margin-bottom:10px;">
+          <div style="font-weight:700;" id="cal-month">October 2026</div>
+          <div style="font-size:13px;color:var(--muted);">◀ ▶</div>
+        </div>
+        <div class="cal-grid" id="cal-grid"></div>
+      </div>
+      <div class="section-title">Sessions on <span id="selected-date-label">today</span></div>
+      <div id="planner-sessions"></div>
+      <button class="btn btn-primary" style="margin-top:8px;" onclick="toast('Create session form opened ✏️')">+ Create Study Session</button>
+    </div>
+  </div>
+
+  <!-- ================= SCREEN 12: PROFILE / PROGRESS ================= -->
+  <div class="screen" id="s12">
+    <div class="app-header">
+      <button class="back-btn" onclick="go('s4')">←</button>
+      <div style="flex:1;"><h1 style="font-size:22px;">Profile</h1></div>
+    </div>
+    <div class="content">
+      <div style="text-align:center;padding:10px 0 20px;">
+        <div class="avatar" style="width:84px;height:84px;font-size:32px;margin:0 auto 12px;" id="prof-avatar">S</div>
+        <div style="font-size:20px;font-weight:800;" id="prof-name">Student</div>
+        <div style="font-size:13px;color:var(--muted);margin-top:2px;" id="prof-num">222016515</div>
+      </div>
+
+      <div class="streak-card" style="background:linear-gradient(135deg,#10B981,#2563EB);">
+        <div class="row between">
+          <div>
+            <div class="big" id="prof-streak">🔥 5</div>
+            <div class="lbl">Day streak</div>
+          </div>
+          <div style="text-align:right;">
+            <div class="big" style="font-size:22px;" id="prof-goal">3/5</div>
+            <div class="lbl">This week</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="section-title">My Modules</div>
+      <div class="chip-row" id="prof-modules"></div>
+
+      <div class="section-title">Achievements</div>
+      <div class="card">
+        <div class="row" style="gap:14px;">
+          <div style="font-size:28px;">🏆</div>
+          <div>
+            <div style="font-weight:700;">First Group Joined</div>
+            <div style="font-size:12px;color:var(--muted);">Earned this week</div>
+          </div>
+        </div>
+      </div>
+      <div class="card">
+        <div class="row" style="gap:14px;">
+          <div style="font-size:28px;">📚</div>
+          <div>
+            <div style="font-weight:700;">5-Day Streak</div>
+            <div style="font-size:12px;color:var(--muted);">Keep it up!</div>
+          </div>
+        </div>
+      </div>
+
+      <button class="btn btn-secondary" style="margin-top:8px;" onclick="toast('Settings opened ⚙️')">Settings</button>
+    </div>
+  </div>
+
+  <!-- Bottom nav -->
+  <div class="bottom-nav" id="bottom-nav">
+    <button class="nav-item" data-nav="s4" onclick="navTo('s4')"><span class="ico">🏠</span>Home</button>
+    <button class="nav-item" data-nav="s5" onclick="navTo('s5')"><span class="ico">👥</span>Groups</button>
+    <button class="nav-item" data-nav="s7" onclick="navTo('s7')"><span class="ico">🎓</span>Tutors</button>
+    <button class="nav-item" data-nav="s10" onclick="navTo('s10')"><span class="ico">📚</span>Resources</button>
+    <button class="nav-item" data-nav="s12" onclick="navTo('s12')"><span class="ico">👤</span>Profile</button>
+  </div>
+
+  <!-- Toast -->
+  <div class="toast" id="toast"></div>
+</div>
+
+<script>
+/* ============================================================
+   DATA (mock)
+   ============================================================ */
+const MODULES = [
+  {code:'CSC 101', name:'Intro to Computer Science'},
+  {code:'MAT 201', name:'Linear Algebra'},
+  {code:'ENG 102', name:'Academic Writing'},
+  {code:'BIO 110', name:'Cell Biology'},
+  {code:'PHY 105', name:'Physics I'},
+  {code:'STA 210', name:'Statistics'},
+  {code:'ECO 101', name:'Microeconomics'},
+  {code:'LAW 120', name:'Legal Systems'},
+];
+
+const GROUPS = [
+  {id:1, name:'CSC 101 Study Squad', module:'CSC 101', members:12, loc:'Library', time:'Fridays 14:00', desc:'We meet weekly to work through programming exercises and past papers. Beginners welcome!'},
+  {id:2, name:'Linear Algebra Warriors', module:'MAT 201', members:8, loc:'Online', time:'Tuesdays 18:00', desc:'Focused on matrices, vectors and exam prep. We share worked solutions after every session.'},
+  {id:3, name:'Essay Writers Circle', module:'ENG 102', members:15, loc:'Library', time:'Wednesdays 10:00', desc:'Peer review and writing feedback sessions. Bring a draft and get constructive feedback.'},
+  {id:4, name:'Cell Bio Crew', module:'BIO 110', members:6, loc:'Lab 3', time:'Mondays 09:00', desc:'Diagrams, lab reports and past papers. We use active recall and flashcards.'},
+  {id:5, name:'Physics Problem Solvers', module:'PHY 105', members:10, loc:'Library', time:'Thursdays 15:00', desc:'Work through mechanics and electricity problems together.'},
+  {id:6, name:'Stats Support Group', module:'STA 210', members:9, loc:'Online', time:'Saturdays 11:00', desc:'SPSS, R and exam prep. All levels welcome.'},
+];
+
+const TUTORS = [
+  {id:1, name:'Titus S.', module:'CSC 101', rating:4.9, reviews:38, rate:'N$50/hr', bio:'3rd-year CS student. I focus on Python, algorithms and exam technique.', slots:['09:00','11:00','14:00','16:00','18:00']},
+  {id:2, name:'Mpho B.', module:'MAT 201', rating:4.8, reviews:27, rate:'N$60/hr', bio:'Maths major. Linear algebra, calculus and statistics. Patient and structured.', slots:['10:00','13:00','15:00','17:00']},
+  {id:3, name:'LNB M.', module:'ENG 102', rating:5.0, reviews:19, rate:'Volunteer', bio:'Postgrad student. Essay structure, referencing and academic tone.', slots:['08:00','12:00','14:00','16:00']},
+  {id:4, name:'Sapalo J.', module:'BIO 110', rating:4.7, reviews:22, rate:'N$45/hr', bio:'Biology tutor. Diagrams, lab reports and past paper walkthroughs.', slots:['09:30','11:30','13:30','15:30']},
+  {id:5, name:'Anna K.', module:'PHY 105', rating:4.9, reviews:31, rate:'N$55/hr', bio:'Physics major. Mechanics, electricity and problem-solving strategies.', slots:['08:00','10:00','14:00','16:00','18:00']},
+];
+
+const RESOURCES = [
+  {id:1, title:'CSC 101 — Full Notes (Ch 1-8)', module:'CSC 101', type:'Notes', uploader:'Titus S.', upvotes:42},
+  {id:2, title:'MAT 201 — Matrix Cheat Sheet', module:'MAT 201', type:'Summary', uploader:'Mpho B.', upvotes:31},
+  {id:3, title:'ENG 102 — Essay Template', module:'ENG 102', type:'Notes', uploader:'LNB M.', upvotes:27},
+  {id:4, title:'BIO 110 — Past Paper 2025', module:'BIO 110', type:'Past Paper', uploader:'Sapalo J.', upvotes:19},
+  {id:5, title:'PHY 105 — Mechanics Problems', module:'PHY 105', type:'Notes', uploader:'Anna K.', upvotes:24},
+  {id:6, title:'STA 210 — SPSS Guide', module:'STA 210', type:'Summary', uploader:'Titus S.', upvotes:16},
+];
+
+const SESSIONS = [
+  {id:1, group:'CSC 101 Study Squad', date:'2026-10-12', time:'14:00', loc:'Library', going:true},
+  {id:2, group:'Linear Algebra Warriors', date:'2026-10-13', time:'18:00', loc:'Online', going:false},
+  {id:3, group:'Essay Writers Circle', date:'2026-10-14', time:'10:00', loc:'Library', going:true},
+  {id:4, group:'Physics Problem Solvers', date:'2026-10-15', time:'15:00', loc:'Library', going:false},
+];
+
+/* ============================================================
+   STATE
+   ============================================================ */
+const state = {
+  user: {name:'Student', num:'222016515', modules:[], streak:5, goal:3, goalTotal:5},
+  selectedModules: [],
+  selectedGroup: null,
+  selectedTutor: null,
+  selectedSlot: null,
+  selectedDate: '2026-10-12',
+  groupFilters: [],
+  tutorFilters: [],
+  resourceFilters: [],
+  joinedGroups: new Set(),
+  resourceUpvotes: new Set(),
+};
+
+/* ============================================================
+   NAVIGATION
+   ============================================================ */
+const NAV_SCREENS = ['s4','s5','s7','s10','s12'];
+
+function go(id, mode){
+  document.querySelectorAll('.screen').forEach(s=>s.classList.remove('active'));
+  const el = document.getElementById(id);
+  if(el){ el.classList.add('active'); el.scrollTop = 0; }
+
+  const nav = document.getElementById('bottom-nav');
+  if(NAV_SCREENS.includes(id)){
+    nav.classList.add('show');
+    document.querySelectorAll('.nav-item').forEach(n=>{
+      n.classList.toggle('active', n.dataset.nav === id);
+    });
+  } else {
+    nav.classList.remove('show');
+  }
+
+  if(id==='s4') renderHome();
+  if(id==='s5') renderGroups();
+  if(id==='s6') renderGroupDetail();
+  if(id==='s7') renderTutors();
+  if(id==='s8') renderTutorProfile();
+  if(id==='s10') renderResources();
+  if(id==='s11') renderPlanner();
+  if(id==='s12') renderProfile();
+
+  if(mode==='login') switchAuth('login');
+}
+
+function navTo(id){ go(id); }
+
+/* ============================================================
+   AUTH
+   ============================================================ */
+function switchAuth(mode){
+  const su = document.getElementById('form-signup');
+  const li = document.getElementById('form-login');
+  const tabSu = document.getElementById('tab-signup');
+  const tabLi = document.getElementById('tab-login');
+  if(mode==='login'){
+    su.style.display='none'; li.style.display='block';
+    tabLi.classList.add('active'); tabSu.classList.remove('active');
+  } else {
+    su.style.display='block'; li.style.display='none';
+    tabSu.classList.add('active'); tabLi.classList.remove('active');
+  }
+}
+
+function submitSignup(){
+  const name = document.getElementById('su-name').value.trim();
+  const num = document.getElementById('su-num').value.trim();
+  const email = document.getElementById('su-email').value.trim();
+  const pass = document.getElementById('su-pass').value;
+  let ok = true;
+
+  const set = (id, cond) => {
+    const el = document.getElementById(id);
+    const input = document.getElementById(id.replace('err-',''));
+    if(!cond){ el.classList.add('show'); input.classList.add('error'); ok=false; }
+    else { el.classList.remove('show'); input.classList.remove('error'); }
+  };
+  set('err-su-name', name.length>=2);
+  set('err-su-num', /^\d{6,}$/.test(num));
+  set('err-su-email', /^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(email));
+  set('err-su-pass', pass.length>=6);
+
+  if(!ok){ toast('Please fix the errors above','error'); return; }
+
+  state.user.name = name.split(' ')[0];
+  state.user.num = num;
+  toast('Account created ✓','success');
+  setTimeout(()=>go('s3'), 400);
+}
+
+function submitLogin(){
+  const id = document.getElementById('li-id').value.trim();
+  const pass = document.getElementById('li-pass').value;
+  let ok = true;
+  const set = (errId, inputId, cond) => {
+    const el = document.getElementById(errId);
+    const input = document.getElementById(inputId);
+    if(!cond){ el.classList.add('show'); input.classList.add('error'); ok=false; }
+    else { el.classList.remove('show'); input.classList.remove('error'); }
+  };
+  set('err-li-id','li-id', id.length>=3);
+  set('err-li-pass','li-pass', pass.length>=1);
+  if(!ok){ toast('Please fill in all fields','error'); return; }
+  state.user.name = 'Student';
+  toast('Welcome back ✓','success');
+  setTimeout(()=>go('s3'), 400);
+}
+
+/* ============================================================
+   MODULES
+   ============================================================ */
+function renderModuleChips(filter=''){
+  const wrap = document.getElementById('module-chips');
+  if(!wrap) return;
+  const f = filter.toLowerCase();
+  wrap.innerHTML = MODULES
+    .filter(m => m.code.toLowerCase().includes(f) || m.name.toLowerCase().includes(f))
+    .map(m => `
+      <button class="chip ${state.selectedModules.includes(m.code)?'selected':''}"
+              onclick="toggleModule('${m.code}')">
+        ${m.code}
+      </button>`).join('');
+  document.getElementById('module-count').textContent = state.selectedModules.length;
+}
+
+function toggleModule(code){
+  const i = state.selectedModules.indexOf(code);
+  if(i>=0) state.selectedModules.splice(i,1);
+  else state.selectedModules.push(code);
+  renderModuleChips(document.querySelector('#s3 .input').value);
+}
+
+function filterModules(v){ renderModuleChips(v); }
+
+function submitModules(){
+  if(state.selectedModules.length===0){ toast('Select at least one module','error'); return; }
+  state.user.modules = [...state.selectedModules];
+  toast(`${state.selectedModules.length} modules saved ✓`,'success');
+  setTimeout(()=>go('s4'), 400);
+}
+
+/* ============================================================
+   HOME
+   ============================================================ */
+function renderHome(){
+  document.getElementById('home-name').textContent = state.user.name;
+  document.getElementById('home-avatar').textContent = state.user.name[0].toUpperCase();
+  document.getElementById('streak-num').textContent = `🔥 ${state.user.streak}`;
+  document.getElementById('weekly-goal').textContent = `${state.user.goal}/${state.user.goalTotal}`;
+
+  const sess = SESSIONS.slice(0,3).map(s=>`
+    <div class="card tap" onclick="go('s11')">
+      <div class="row between">
+        <div>
+          <div class="card-title" style="font-size:15px;">${s.group}</div>
+          <div class="card-sub">${formatDate(s.date)} · ${s.time} · ${s.loc}</div>
+        </div>
+        <div style="font-size:20px;">${s.going?'✅':'⏳'}</div>
+      </div>
+    </div>`).join('');
+  document.getElementById('home-sessions').innerHTML = sess || '<div class="empty">No upcoming sessions</div>';
+
+  const grp = GROUPS.slice(0,2).map(g=>`
+    <div class="card tap" onclick="openGroup(${g.id})">
+      <div class="row between">
+        <div>
+          <div class="card-title" style="font-size:15px;">${g.name}</div>
+          <div class="card-sub">${g.module} · ${g.members} members</div>
+        </div>
+        <div style="font-size:20px;">👥</div>
+      </div>
+    </div>`).join('');
+  document.getElementById('home-groups').innerHTML = grp;
+}
+
+/* ============================================================
+   GROUPS
+   ============================================================ */
+const GROUP_FILTERS = ['CSC 101','MAT 201','ENG 102','BIO 110','PHY 105','STA 210'];
+
+function renderGroupFilters(){
+  const wrap = document.getElementById('group-filters');
+  if(!wrap) return;
+  wrap.innerHTML = GROUP_FILTERS.map(f=>`
+    <button class="chip filter ${state.groupFilters.includes(f)?'selected':''}"
+            onclick="toggleGroupFilter('${f}')">${f}</button>`).join('');
+}
+
+function toggleGroupFilter(f){
+  const i = state.groupFilters.indexOf(f);
+  if(i>=0) state.groupFilters.splice(i,1); else state.groupFilters.push(f);
+  renderGroups();
+}
+
+function filterGroups(v){ renderGroups(v); }
+
+function renderGroups(search=''){
+  renderGroupFilters();
+  const s = (search||'').toLowerCase();
+  const list = GROUPS.filter(g=>{
+    const matchSearch = !s || g.name.toLowerCase().includes(s) || g.module.toLowerCase().includes(s);
+    const matchFilter = state.groupFilters.length===0 || state.groupFilters.includes(g.module);
+    return matchSearch && matchFilter;
+  });
+  const wrap = document.getElementById('group-list');
+  if(list.length===0){ wrap.innerHTML = '<div class="empty"><span class="em">🔍</span>No groups match your filters</div>'; return; }
+  wrap.innerHTML = list.map(g=>{
+    const joined = state.joinedGroups.has(g.id);
+    return `
+    <div class="card">
+      <div class="row between" style="align-items:flex-start;">
+        <div style="flex:1;" onclick="openGroup(${g.id})">
+          <div class="card-title">${g.name}</div>
+          <div class="card-sub">${g.module} · ${g.members} members</div>
+          <div class="card-meta">
+            <span>📍 ${g.loc}</span>
+            <span>🕐 ${g.time}</span>
+          </div>
+        </div>
+      </div>
+      <button class="btn ${joined?'btn-success':'btn-secondary'}" style="margin-top:12px;height:44px;font-size:14px;"
+              onclick="joinGroup(${g.id})">${joined?'✓ Joined':'Join Group'}</button>
+    </div>`;
+  }).join('');
+}
+
+function openGroup(id){
+  state.selectedGroup = GROUPS.find(g=>g.id===id);
+  go('s6');
+}
+
+function renderGroupDetail(){
+  const g = state.selectedGroup;
+  if(!g) return;
+  document.getElementById('g-name').textContent = g.name;
+  document.getElementById('g-mod').textContent = g.module;
+  document.getElementById('g-desc').textContent = g.desc;
+  document.getElementById('g-members').textContent = g.members;
+  document.getElementById('g-loc').textContent = g.loc;
+  document.getElementById('g-time').textContent = g.time;
+  const joined = state.joinedGroups.has(g.id);
+  const btn = document.getElementById('g-join-btn');
+  btn.textContent = joined ? '✓ Joined' : 'Join Group';
+  btn.className = 'btn ' + (joined?'btn-success':'btn-primary');
+  btn.onclick = ()=>joinGroup(g.id);
+
+  const chat = document.getElementById('chat-list');
+  if(chat && !chat.dataset.filled){
+    chat.dataset.filled = '1';
+    chat.innerHTML = `
+      <div style="align-self:flex-start;background:#fff;padding:10px 14px;border-radius:14px 14px 14px 4px;max-width:80%;font-size:14px;box-shadow:var(--shadow);">
+        <b style="font-size:12px;color:var(--primary);">Titus</b><br>Hey everyone, are we meeting this Friday?
+      </div>
+      <div style="align-self:flex-start;background:#fff;padding:10px 14px;border-radius:14px 14px 14px 4px;max-width:80%;font-size:14px;box-shadow:var(--shadow);">
+        <b style="font-size:12px;color:var(--primary);">Mpho</b><br>Yes! Library, 2pm. Bring past papers 📚
+      </div>
+      <div style="align-self:flex-end;background:var(--primary);color:#fff;padding:10px 14px;border-radius:14px 14px 4px 14px;max-width:80%;font-size:14px;">
+        See you there! 👋
+      </div>`;
+  }
+
+  const res = RESOURCES.filter(r=>r.module===g.module);
+  document.getElementById('group-resources').innerHTML = res.length
+    ? res.map(r=>resourceCard(r)).join('')
+    : '<div class="empty"><span class="em">📄</span>No resources shared yet</div>';
+}
+
+function switchGroupTab(tab, btn){
+  document.querySelectorAll('#s6 .tab').forEach(t=>t.classList.remove('active'));
+  btn.classList.add('active');
+  ['about','chat','resources'].forEach(t=>{
+    document.getElementById('g-tab-'+t).style.display = (t===tab)?'block':'none';
+  });
+}
+
+function joinGroup(id){
+  if(!id) id = state.selectedGroup?.id;
+  if(!id) return;
+  if(state.joinedGroups.has(id)){ toast('Already joined'); return; }
+  state.joinedGroups.add(id);
+  const g = GROUPS.find(x=>x.id===id);
+  if(g) g.members++;
+  toast('Joined! ✓','success');
+  if(document.getElementById('s5').classList.contains('active')) renderGroups();
+  if(document.getElementById('s6').classList.contains('active')) renderGroupDetail();
+  if(document.getElementById('s4').classList.contains('active')) renderHome();
+}
+
+function sendMsg(){
+  const inp = document.getElementById('chat-input');
+  const v = inp.value.trim();
+  if(!v) return;
+  const chat = document.getElementById('chat-list');
+  const div = document.createElement('div');
+  div.style.cssText = 'align-self:flex-end;background:var(--primary);color:#fff;padding:10px 14px;border-radius:14px 14px 4px 14px;max-width:80%;font-size:14px;';
+  div.textContent = v;
+  chat.appendChild(div);
+  inp.value = '';
+  chat.parentElement.scrollTop = chat.parentElement.scrollHeight;
+}
+
+/* ============================================================
+   TUTORS
+   ============================================================ */
+const TUTOR_FILTERS = ['CSC 101','MAT 201','ENG 102','BIO 110','PHY 105'];
+
+function renderTutorFilters(){
+  const wrap = document.getElementById('tutor-filters');
+  if(!wrap) return;
+  wrap.innerHTML = TUTOR_FILTERS.map(f=>`
+    <button class="chip filter ${state.tutorFilters.includes(f)?'selected':''}"
+            onclick="toggleTutorFilter('${f}')">${f}</button>`).join('');
+}
+
+function toggleTutorFilter(f){
+  const i = state.tutorFilters.indexOf(f);
+  if(i>=0) state.tutorFilters.splice(i,1); else state.tutorFilters.push(f);
+  renderTutors();
+}
+
+function filterTutors(v){ renderTutors(v); }
+
+function renderTutors(search=''){
+  renderTutorFilters();
+  const s = (search||'').toLowerCase();
+  const list = TUTORS.filter(t=>{
+    const matchSearch = !s || t.name.toLowerCase().includes(s) || t.module.toLowerCase().includes(s);
+    const matchFilter = state.tutorFilters.length===0 || state.tutorFilters.includes(t.module);
+    return matchSearch && matchFilter;
+  });
+  const wrap = document.getElementById('tutor-list');
+  if(list.length===0){ wrap.innerHTML = '<div class="empty"><span class="em">🔍</span>No tutors match your filters</div>'; return; }
+  wrap.innerHTML = list.map(t=>`
+    <div class="card tap" onclick="openTutor(${t.id})">
+      <div class="row">
+        <div class="avatar">${t.name[0]}</div>
+        <div style="flex:1;">
+          <div class="card-title" style="font-size:15px;">${t.name}</div>
+          <div class="card-sub">${t.module}</div>
+          <div class="card-meta">
+            <span class="stars">★ ${t.rating}</span>
+            <span>(${t.reviews} reviews)</span>
+            <span>💰 ${t.rate}</span>
+          </div>
+        </div>
+        <div style="font-size:18px;color:var(--muted);">›</div>
+      </div>
+    </div>`).join('');
+}
+
+function openTutor(id){
+  state.selectedTutor = TUTORS.find(t=>t.id===id);
+  state.selectedSlot = null;
+  go('s8');
+}
+
+function renderTutorProfile(){
+  const t = state.selectedTutor;
+  if(!t) return;
+  document.getElementById('tutor-profile-content').innerHTML = `
+    <div style="text-align:center;padding:10px 0 18px;">
+      <div class="avatar" style="width:84px;height:84px;font-size:32px;margin:0 auto 12px;">${t.name[0]}</div>
+      <div style="font-size:20px;font-weight:800;">${t.name}</div>
+      <div style="font-size:13px;color:var(--muted);margin-top:2px;">${t.module} Tutor</div>
+      <div class="stars" style="margin-top:6px;font-size:14px;">★ ${t.rating} <span style="color:var(--muted);font-size:12px;">(${t.reviews} reviews)</span></div>
+    </div>
+    <div class="card">
+      <div class="card-title" style="font-size:14px;">About</div>
+      <p style="font-size:14px;color:var(--muted);line-height:1.6;margin-top:6px;">${t.bio}</p>
+      <div class="card-meta" style="margin-top:10px;">
+        <span>💰 ${t.rate}</span>
+        <span>🕐 ${t.slots.length} slots available</span>
+      </div>
+    </div>
+    <div class="section-title">Select a time slot</div>
+    <div class="slot-grid" id="slot-grid">
+      ${t.slots.map(s=>`<button class="slot" onclick="selectSlot('${s}',this)">${s}</button>`).join('')}
+    </div>
+    <button class="btn btn-primary" style="margin-top:20px;" id="book-btn" onclick="bookSession()">Book Session</button>
+  `;
+}
+
+function selectSlot(s, el){
+  state.selectedSlot = s;
+  document.querySelectorAll('#slot-grid .slot').forEach(b=>b.classList.remove('selected'));
+  el.classList.add('selected');
+}
+
+function bookSession(){
+  if(!state.selectedSlot){ toast('Please select a time slot','error'); return; }
+  const t = state.selectedTutor;
+  const date = 'Mon 12 Oct 2026';
+  document.getElementById('confirm-text').innerHTML =
+    `Your session with <b>${t.name}</b> has been confirmed for <b>${date} at ${state.selectedSlot}</b>.`;
+  document.getElementById('confirm-card').innerHTML = `
+    <div class="row"><div class="avatar sm">${t.name[0]}</div>
+      <div><div style="font-weight:700;">${t.name}</div><div style="font-size:12px;color:var(--muted);">${t.module}</div></div>
+    </div>
+    <div style="margin-top:12px;font-size:14px;line-height:1.8;">
+      <div>📅 ${date}</div>
+      <div>🕐 ${state.selectedSlot}</div>
+      <div>💰 ${t.rate}</div>
+    </div>`;
+  go('s9');
+}
+
+/* ============================================================
+   RESOURCES
+   ============================================================ */
+const RESOURCE_FILTERS = ['CSC 101','MAT 201','ENG 102','BIO 110','PHY 105','STA 210'];
+
+function renderResourceFilters(){
+  const wrap = document.getElementById('resource-filters');
+  if(!wrap) return;
+  wrap.innerHTML = RESOURCE_FILTERS.map(f=>`
+    <button class="chip filter ${state.resourceFilters.includes(f)?'selected':''}"
+            onclick="toggleResourceFilter('${f}')">${f}</button>`).join('');
+}
+
+function toggleResourceFilter(f){
+  const i = state.resourceFilters.indexOf(f);
+  if(i>=0) state.resourceFilters.splice(i,1); else state.resourceFilters.push(f);
+  renderResources();
+}
+
+function filterResources(v){ renderResources(v); }
+
+function resourceCard(r){
+  const up = state.resourceUpvotes.has(r.id);
+  return `
+  <div class="card">
+    <div class="row between" style="align-items:flex-start;">
+      <div style="flex:1;">
+        <div class="card-title" style="font-size:15px;">${r.title}</div>
+        <div class="card-sub">${r.module} · ${r.type}</div>
+        <div class="card-meta"><span>👤 ${r.uploader}</span></div>
+      </div>
+      <button class="chip ${up?'selected':''}" style="min-width:56px;justify-content:center;"
+              onclick="upvote(${r.id})">▲ ${r.upvotes + (up?1:0)}</button>
+    </div>
+  </div>`;
+}
+
+function renderResources(search=''){
+  renderResourceFilters();
+  const s = (search||'').toLowerCase();
+  const list = RESOURCES.filter(r=>{
+    const matchSearch = !s || r.title.toLowerCase().includes(s) || r.module.toLowerCase().includes(s);
+    const matchFilter = state.resourceFilters.length===0 || state.resourceFilters.includes(r.module);
+    return matchSearch && matchFilter;
+  });
+  const wrap = document.getElementById('resource-list');
+  if(list.length===0){ wrap.innerHTML = '<div class="empty"><span class="em">📄</span>No resources match</div>'; return; }
+  wrap.innerHTML = list.map(resourceCard).join('');
+}
+
+function upvote(id){
+  if(state.resourceUpvotes.has(id)) state.resourceUpvotes.delete(id);
+  else { state.resourceUpvotes.add(id); toast('Upvoted 👍','success'); }
+  renderResources(document.querySelector('#s10 .input').value);
+}
+
+/* ============================================================
+   PLANNER
+   ============================================================ */
+function renderPlanner(){
+  const grid = document.getElementById('cal-grid');
+  if(!grid) return;
+  const days = ['M','T','W','T','F','S','S'];
+  let html = days.map(d=>`<div style="text-align:center;font-size:11px;font-weight:700;color:var(--muted);padding:4px 0;">${d}</div>`).join('');
+  const startOffset = 3;
+  for(let i=0;i<startOffset;i++) html += '<div class="cal-day empty"></div>';
+  for(let d=1; d<=31; d++){
+    const dateStr = `2026-10-${String(d).padStart(2,'0')}`;
+    const has = SESSIONS.some(s=>s.date===dateStr);
+    const today = d===12;
+    const selected = dateStr===state.selectedDate;
+    html += `<div class="cal-day ${today?'today':''} ${has?'has-session':''} ${selected?'selected':''}"
+              onclick="selectDate('${dateStr}', ${d})">${d}</div>`;
+  }
+  grid.innerHTML = html;
+  document.getElementById('selected-date-label').textContent = formatDate(state.selectedDate);
+
+  const list = SESSIONS.filter(s=>s.date===state.selectedDate);
+  const wrap = document.getElementById('planner-sessions');
+  if(list.length===0){
+    wrap.innerHTML = '<div class="empty"><span class="em">📅</span>No sessions on this day</div>';
+  } else {
+    wrap.innerHTML = list.map(s=>`
+      <div class="card">
+        <div class="row between">
+          <div>
+            <div class="card-title" style="font-size:15px;">${s.group}</div>
+            <div class="card-sub">${s.time} · ${s.loc}</div>
+          </div>
+        </div>
+        <button class="btn ${s.going?'btn-success':'btn-secondary'}" style="margin-top:10px;height:44px;font-size:14px;"
+                onclick="toggleRSVP(${s.id})">${s.going?'✓ Going':'RSVP'}</button>
+      </div>`).join('');
+  }
+}
+
+function selectDate(dateStr, d){
+  state.selectedDate = dateStr;
+  renderPlanner();
+}
+
+function toggleRSVP(id){
+  const s = SESSIONS.find(x=>x.id===id);
+  if(!s) return;
+  s.going = !s.going;
+  toast(s.going?'RSVP confirmed ✓':'RSVP removed','success');
+  renderPlanner();
+}
+
+/* ============================================================
+   PROFILE
+   ============================================================ */
+function renderProfile(){
+  document.getElementById('prof-avatar').textContent = state.user.name[0].toUpperCase();
+  document.getElementById('prof-name').textContent = state.user.name;
+  document.getElementById('prof-num').textContent = state.user.num;
+  document.getElementById('prof-streak').textContent = `🔥 ${state.user.streak}`;
+  document.getElementById('prof-goal').textContent = `${state.user.goal}/${state.user.goalTotal}`;
+  const mods = state.user.modules.length ? state.user.modules : ['CSC 101','MAT 201'];
+  document.getElementById('prof-modules').innerHTML = mods.map(m=>`<span class="chip selected" style="cursor:default;">${m}</span>`).join('');
+}
+
+/* ============================================================
+   HELPERS
+   ============================================================ */
+function formatDate(d){
+  const dt = new Date(d+'T00:00:00');
+  return dt.toLocaleDateString('en-GB',{weekday:'short',day:'numeric',month:'short'});
+}
+
+let toastTimer;
+function toast(msg, type=''){
+  const t = document.getElementById('toast');
+  t.textContent = msg;
+  t.className = 'toast show ' + type;
+  clearTimeout(toastTimer);
+  toastTimer = setTimeout(()=>t.className='toast '+type, 2000);
+}
+
+function tickClock(){
+  const d = new Date();
+  const h = d.getHours() % 12 || 12;
+  const m = String(d.getMinutes()).padStart(2,'0');
+  document.getElementById('clock').textContent = `${h}:${m}`;
+}
+tickClock(); setInterval(tickClock, 30000);
+
+/* ============================================================
+   INIT
+   ============================================================ */
+renderModuleChips();
+renderGroupFilters();
+renderTutorFilters();
+renderResourceFilters();
+renderProfile();
+</script>
+</body>
+</html>
