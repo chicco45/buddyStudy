@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
-<title>StudyBuddy — Testable Prototype</title>
+<title>StudyBuddy</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
@@ -36,6 +36,7 @@
     min-height:100vh;
     padding:20px;
   }
+  /* Phone frame */
   .phone{
     width:390px;
     height:844px;
@@ -59,6 +60,7 @@
   }
   .status-bar .icons{display:flex;gap:5px;align-items:center;font-size:12px;}
 
+  /* Screen container */
   .screen{
     flex:1;
     overflow-y:auto;
@@ -72,6 +74,7 @@
   .screen.active{display:flex;animation:fade .25s ease;}
   @keyframes fade{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}
 
+  /* Header */
   .app-header{
     padding:8px 20px 16px;
     display:flex;align-items:center;gap:12px;
@@ -88,8 +91,10 @@
   }
   .back-btn:active{transform:scale(.92);}
 
+  /* Content */
   .content{padding:0 20px 100px;flex:1;}
 
+  /* Buttons */
   .btn{
     width:100%;height:52px;border:none;border-radius:var(--radius-sm);
     font-family:inherit;font-size:16px;font-weight:700;cursor:pointer;
@@ -106,6 +111,7 @@
   .btn-accent{background:var(--accent);color:#fff;}
   .btn:disabled{opacity:.45;cursor:not-allowed;transform:none;}
 
+  /* Inputs */
   .field{margin-bottom:14px;}
   .field label{display:block;font-size:13px;font-weight:600;color:var(--text);margin-bottom:6px;}
   .input{
@@ -118,6 +124,7 @@
   .error-msg{font-size:12px;color:var(--error);margin-top:5px;font-weight:500;display:none;}
   .error-msg.show{display:block;}
 
+  /* Chips */
   .chip-row{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:16px;}
   .chip{
     padding:10px 16px;border-radius:999px;border:2px solid var(--border);background:#fff;
@@ -128,6 +135,7 @@
   .chip.selected{background:var(--primary);border-color:var(--primary);color:#fff;}
   .chip.filter.selected{background:var(--accent);border-color:var(--accent);color:#fff;}
 
+  /* Cards */
   .card{
     background:var(--card);border-radius:var(--radius);padding:16px;
     box-shadow:var(--shadow);margin-bottom:12px;transition:transform .12s;
@@ -140,12 +148,14 @@
   .card-meta{display:flex;gap:12px;margin-top:10px;font-size:12px;color:var(--muted);flex-wrap:wrap;}
   .card-meta span{display:flex;align-items:center;gap:4px;}
 
+  /* Section titles */
   .section-title{
     font-size:15px;font-weight:700;margin:22px 0 12px;display:flex;
     align-items:center;justify-content:space-between;
   }
   .section-title .link{font-size:13px;color:var(--primary);font-weight:600;cursor:pointer;}
 
+  /* Bottom nav */
   .bottom-nav{
     position:absolute;bottom:0;left:0;right:0;height:76px;
     background:#fff;border-top:1px solid var(--border);
@@ -164,9 +174,11 @@
   .nav-item.active{color:var(--primary);}
   .nav-item:active{background:#F3F4F6;}
 
+  /* Progress bar */
   .progress{height:8px;background:var(--border);border-radius:999px;overflow:hidden;margin-top:8px;}
   .progress > div{height:100%;background:var(--secondary);border-radius:999px;transition:width .4s;}
 
+  /* Avatar */
   .avatar{
     width:48px;height:48px;border-radius:50%;background:linear-gradient(135deg,var(--primary),#7C3AED);
     display:flex;align-items:center;justify-content:center;color:#fff;
@@ -174,9 +186,11 @@
   }
   .avatar.sm{width:38px;height:38px;font-size:14px;}
 
+  /* Row layout */
   .row{display:flex;align-items:center;gap:12px;}
   .row.between{justify-content:space-between;}
 
+  /* Toast */
   .toast{
     position:absolute;bottom:96px;left:50%;transform:translateX(-50%) translateY(20px);
     background:var(--text);color:#fff;padding:12px 20px;border-radius:999px;
@@ -187,6 +201,7 @@
   .toast.success{background:var(--secondary);}
   .toast.error{background:var(--error);}
 
+  /* Tabs */
   .tabs{display:flex;gap:4px;background:#F3F4F6;padding:4px;border-radius:12px;margin-bottom:16px;}
   .tab{
     flex:1;padding:10px;border:none;background:transparent;border-radius:9px;
@@ -195,6 +210,7 @@
   }
   .tab.active{background:#fff;color:var(--text);box-shadow:var(--shadow);}
 
+  /* Time slots */
   .slot-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-top:8px;}
   .slot{
     padding:12px 6px;border:2px solid var(--border);border-radius:var(--radius-sm);
@@ -204,6 +220,7 @@
   .slot.selected{background:var(--primary);border-color:var(--primary);color:#fff;}
   .slot.unavailable{opacity:.35;cursor:not-allowed;text-decoration:line-through;}
 
+  /* Streak card */
   .streak-card{
     background:linear-gradient(135deg,var(--primary),#7C3AED);
     border-radius:var(--radius);padding:18px;color:#fff;margin-bottom:16px;
@@ -212,6 +229,7 @@
   .streak-card .big{font-size:32px;font-weight:800;letter-spacing:-.03em;}
   .streak-card .lbl{font-size:13px;opacity:.9;font-weight:500;}
 
+  /* Success screen */
   .success-wrap{
     flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;
     text-align:center;padding:40px 24px;
@@ -224,6 +242,7 @@
   }
   @keyframes pop{from{transform:scale(0)}to{transform:scale(1)}}
 
+  /* Calendar */
   .cal-grid{display:grid;grid-template-columns:repeat(7,1fr);gap:6px;margin-top:8px;}
   .cal-day{
     aspect-ratio:1;border-radius:9px;display:flex;flex-direction:column;
@@ -240,6 +259,7 @@
   .cal-day.selected{background:var(--primary);color:#fff;border-color:var(--primary);}
   .cal-day.empty{background:transparent;border:none;cursor:default;}
 
+  /* FAB */
   .fab{
     position:absolute;bottom:96px;right:20px;width:56px;height:56px;border-radius:50%;
     background:var(--primary);color:#fff;border:none;font-size:26px;cursor:pointer;
@@ -248,17 +268,21 @@
   }
   .fab:active{transform:scale(.9);}
 
+  /* Rating stars */
   .stars{color:var(--accent);font-size:13px;letter-spacing:1px;}
 
+  /* Empty state */
   .empty{
     text-align:center;padding:40px 20px;color:var(--muted);
     font-size:14px;font-weight:500;
   }
   .empty .em{font-size:40px;margin-bottom:10px;display:block;opacity:.5;}
 
+  /* Screen title big */
   .screen-title{font-size:26px;font-weight:800;letter-spacing:-.03em;margin-bottom:4px;}
   .screen-sub{font-size:14px;color:var(--muted);font-weight:500;margin-bottom:20px;}
 
+  /* Splash */
   .splash{
     flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;
     padding:40px 30px;text-align:center;
@@ -284,7 +308,31 @@
     .notch{display:none;}
   }
 
+  /* Phone-size adaptation: fill the real screen when opened on a phone */
   @media (max-width:430px){body{padding:0;min-height:100dvh}.phone{width:100%;height:100dvh;border-radius:0;box-shadow:none}.notch,.status-bar{display:none}}
+
+  /* ===== v2 additions ===== */
+  #fab{display:none}#fab.show{display:flex}
+  .slot.unavailable{pointer-events:none}
+  .sheet-bg{position:absolute;inset:0;background:rgba(15,23,42,.5);display:none;align-items:flex-end;z-index:150}
+  .sheet-bg.show{display:flex}
+  .sheet{background:#fff;width:100%;max-height:88%;overflow:auto;border-radius:24px 24px 0 0;padding:12px 20px 28px;animation:fade .25s}
+  .grab{width:40px;height:4px;border-radius:9px;background:var(--border);margin:0 auto 14px}
+  .sheet h2{font-size:20px;font-weight:800;margin-bottom:14px}
+  select.input{appearance:none}
+  .bub{align-self:flex-start;background:#fff;padding:10px 14px;border-radius:14px 14px 14px 4px;max-width:80%;font-size:14px;box-shadow:var(--shadow)}
+  .bub b{font-size:12px;color:var(--primary)}
+  .bub.me{align-self:flex-end;background:var(--primary);color:#fff;border-radius:14px 14px 4px 14px;box-shadow:none}
+  .bub small{display:block;font-size:10px;opacity:.7;text-align:right;margin-top:2px}
+  .switch{width:50px;height:30px;border-radius:99px;background:var(--border);position:relative;cursor:pointer;flex-shrink:0;transition:.2s}
+  .switch::after{content:'';position:absolute;top:3px;left:3px;width:24px;height:24px;border-radius:50%;background:#fff;transition:.2s}
+  .switch.on{background:var(--secondary)}.switch.on::after{left:23px}
+  .badge{position:absolute;top:-2px;right:-2px;min-width:18px;height:18px;border-radius:9px;background:var(--error);color:#fff;font-size:10px;font-weight:700;display:none;align-items:center;justify-content:center;padding:0 4px}
+  .stats{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}
+  .stat{text-align:center;padding:14px 6px;margin:0}.stat b{display:block;font-size:22px;font-weight:800}.stat span{font-size:11px;color:var(--muted)}
+  .dot{width:8px;height:8px;border-radius:50%;background:var(--primary);flex-shrink:0}
+  .btn-danger{background:#fff;color:var(--error);border:2px solid var(--error);margin-top:10px}
+  .nav-item{min-width:50px}
 </style>
 </head>
 <body>
@@ -314,14 +362,10 @@
 
   <!-- ================= SCREEN 2: SIGN UP / LOGIN ================= -->
   <div class="screen" id="s2">
-    <div class="app-header">
-      <button class="back-btn" onclick="go('s1')">←</button>
-      <div style="flex:1;">
-        <h1 style="font-size:20px;">Welcome 👋</h1>
-        <div class="sub">Sign up or log in to continue</div>
-      </div>
-    </div>
-    <div class="content" style="padding-top:0;">
+    <div class="content" style="padding-top:20px;">
+      <div class="screen-title">Welcome 👋</div>
+      <div class="screen-sub">Sign up or log in to continue</div>
+
       <div class="tabs" style="margin-bottom:24px;">
         <button class="tab active" id="tab-signup" onclick="switchAuth('signup')">Sign Up</button>
         <button class="tab" id="tab-login" onclick="switchAuth('login')">Login</button>
@@ -365,6 +409,8 @@
           <div class="error-msg" id="err-li-pass">Please enter your password</div>
         </div>
         <button class="btn btn-primary" style="margin-top:8px;" onclick="submitLogin()">Log In</button>
+        <button class="btn btn-ghost" onclick="forgotPass()">Forgot password?</button>
+        <div class="card-sub" style="text-align:center;margin-top:8px;">Demo account: 222016515 / demo123</div>
       </div>
     </div>
   </div>
@@ -373,11 +419,11 @@
   <div class="screen" id="s3">
     <div class="app-header">
       <button class="back-btn" onclick="go('s2')">←</button>
-      <div style="flex:1;"><h1 style="font-size:20px;">Select Modules</h1></div>
+      <div><h1 style="font-size:20px;">Select Modules</h1></div>
     </div>
     <div class="content">
-      <div class="screen-sub">Choose the modules you're taking this semester. We'll use this to find your study groups and tutors.</div>
-      <input class="input" placeholder="🔍 Search modules..." oninput="filterModules(this.value)" style="margin-bottom:16px;" />
+      <div class="screen-sub">Search for any UNAM module by code or name. Can't find yours? Add it in one tap and it will work everywhere in the app.</div>
+      <input class="input" placeholder="🔍 Search or add any module code or name..." oninput="filterModules(this.value)" style="margin-bottom:16px;" />
       <div class="chip-row" id="module-chips"></div>
       <div style="height:8px;"></div>
       <button class="btn btn-primary" onclick="submitModules()">Done (<span id="module-count">0</span> selected)</button>
@@ -389,9 +435,10 @@
     <div class="app-header">
       <div style="flex:1;">
         <h1>Hi, <span id="home-name">Student</span> 👋</h1>
-        <div class="sub">Let's make today productive</div>
+        <div class="sub" id="home-sub">Let's make today productive</div>
       </div>
-      <div class="avatar sm" id="home-avatar">S</div>
+      <button class="back-btn" style="position:relative" onclick="go('s14')">🔔<span class="badge" id="bell-badge"></span></button>
+      <div class="avatar sm" id="home-avatar" style="cursor:pointer" onclick="go('s12')">S</div>
     </div>
     <div class="content">
       <div class="streak-card">
@@ -405,7 +452,7 @@
             <div class="lbl">Weekly goal</div>
           </div>
         </div>
-        <div class="progress" style="background:rgba(255,255,255,.25);"><div style="width:60%;background:#fff;"></div></div>
+        <div class="progress" style="background:rgba(255,255,255,.25);"><div id="goal-bar" style="width:0%;background:#fff;"></div></div>
       </div>
 
       <div class="section-title">Quick Actions</div>
@@ -431,7 +478,6 @@
   <!-- ================= SCREEN 5: FIND GROUPS ================= -->
   <div class="screen" id="s5">
     <div class="app-header">
-      <button class="back-btn" onclick="go('s4')">←</button>
       <div style="flex:1;"><h1 style="font-size:22px;">Find Groups</h1></div>
     </div>
     <div class="content">
@@ -484,7 +530,6 @@
   <!-- ================= SCREEN 7: FIND A TUTOR ================= -->
   <div class="screen" id="s7">
     <div class="app-header">
-      <button class="back-btn" onclick="go('s4')">←</button>
       <div style="flex:1;"><h1 style="font-size:22px;">Find a Tutor</h1></div>
     </div>
     <div class="content">
@@ -507,28 +552,21 @@
 
   <!-- ================= SCREEN 9: BOOKING CONFIRMATION ================= -->
   <div class="screen" id="s9">
-    <div class="app-header">
-      <button class="back-btn" onclick="go('s8')">←</button>
-      <div style="flex:1;"><h1 style="font-size:19px;">Booking Confirmed</h1></div>
-    </div>
-    <div class="content" style="display:flex;flex-direction:column;align-items:center;justify-content:center;padding-bottom:40px;">
-      <div class="success-wrap" style="padding:20px 0;">
-        <div class="success-icon">✓</div>
-        <h1 style="font-size:24px;font-weight:800;letter-spacing:-.02em;">Session Booked!</h1>
-        <p style="color:var(--muted);font-size:15px;margin-top:8px;line-height:1.5;" id="confirm-text">
-          Your tutoring session has been confirmed.
-        </p>
-        <div class="card" style="width:100%;text-align:left;margin-top:24px;" id="confirm-card"></div>
-        <button class="btn btn-primary" style="margin-top:16px;" onclick="go('s4')">Back to Home</button>
-        <button class="btn btn-ghost" onclick="toast('Added to calendar ✓')">Add to Calendar</button>
-      </div>
+    <div class="success-wrap">
+      <div class="success-icon">✓</div>
+      <h1 style="font-size:24px;font-weight:800;letter-spacing:-.02em;">Session Booked!</h1>
+      <p style="color:var(--muted);font-size:15px;margin-top:8px;line-height:1.5;" id="confirm-text">
+        Your tutoring session has been confirmed.
+      </p>
+      <div class="card" style="width:100%;text-align:left;margin-top:24px;" id="confirm-card"></div>
+      <button class="btn btn-primary" style="margin-top:16px;" onclick="go('s4')">Back to Home</button>
+      <button class="btn btn-ghost" onclick="toast('Added to calendar ✓')">Add to Calendar</button>
     </div>
   </div>
 
   <!-- ================= SCREEN 10: NOTES & RESOURCES ================= -->
   <div class="screen" id="s10">
     <div class="app-header">
-      <button class="back-btn" onclick="go('s4')">←</button>
       <div style="flex:1;"><h1 style="font-size:22px;">Resources</h1></div>
     </div>
     <div class="content">
@@ -536,33 +574,30 @@
       <div class="chip-row" id="resource-filters"></div>
       <div id="resource-list"></div>
     </div>
-    <button class="fab" onclick="toast('Upload flow opened 📤')">+</button>
   </div>
 
   <!-- ================= SCREEN 11: STUDY PLANNER ================= -->
   <div class="screen" id="s11">
     <div class="app-header">
-      <button class="back-btn" onclick="go('s4')">←</button>
       <div style="flex:1;"><h1 style="font-size:22px;">Study Planner</h1></div>
     </div>
     <div class="content">
       <div class="card">
         <div class="row between" style="margin-bottom:10px;">
           <div style="font-weight:700;" id="cal-month">October 2026</div>
-          <div style="font-size:13px;color:var(--muted);">◀ ▶</div>
+          <div class="row" style="gap:6px;"><button class="back-btn" style="width:34px;height:34px;font-size:14px" onclick="calNav(-1)">◀</button><button class="back-btn" style="width:34px;height:34px;font-size:14px" onclick="calNav(1)">▶</button></div>
         </div>
         <div class="cal-grid" id="cal-grid"></div>
       </div>
       <div class="section-title">Sessions on <span id="selected-date-label">today</span></div>
       <div id="planner-sessions"></div>
-      <button class="btn btn-primary" style="margin-top:8px;" onclick="toast('Create session form opened ✏️')">+ Create Study Session</button>
+      <button class="btn btn-primary" style="margin-top:8px;" onclick="sheetSession()">+ Create Study Session</button>
     </div>
   </div>
 
   <!-- ================= SCREEN 12: PROFILE / PROGRESS ================= -->
   <div class="screen" id="s12">
     <div class="app-header">
-      <button class="back-btn" onclick="go('s4')">←</button>
       <div style="flex:1;"><h1 style="font-size:22px;">Profile</h1></div>
     </div>
     <div class="content">
@@ -588,28 +623,21 @@
       <div class="section-title">My Modules</div>
       <div class="chip-row" id="prof-modules"></div>
 
-      <div class="section-title">Achievements</div>
-      <div class="card">
-        <div class="row" style="gap:14px;">
-          <div style="font-size:28px;">🏆</div>
-          <div>
-            <div style="font-weight:700;">First Group Joined</div>
-            <div style="font-size:12px;color:var(--muted);">Earned this week</div>
-          </div>
-        </div>
-      </div>
-      <div class="card">
-        <div class="row" style="gap:14px;">
-          <div style="font-size:28px;">📚</div>
-          <div>
-            <div style="font-weight:700;">5-Day Streak</div>
-            <div style="font-size:12px;color:var(--muted);">Keep it up!</div>
-          </div>
-        </div>
-      </div>
-
-      <button class="btn btn-secondary" style="margin-top:8px;" onclick="toast('Settings opened ⚙️')">Settings</button>
+      <div id="prof-extra"></div>
+      <button class="btn btn-secondary" style="margin-top:8px;" onclick="go('s13')">Settings</button>
     </div>
+  </div>
+
+  
+  <!-- SETTINGS -->
+  <div class="screen" id="s13">
+    <div class="app-header"><button class="back-btn" onclick="go('s12')">←</button><h1 style="font-size:20px;">Settings</h1></div>
+    <div class="content" id="settings-body"></div>
+  </div>
+  <!-- NOTIFICATIONS -->
+  <div class="screen" id="s14">
+    <div class="app-header"><button class="back-btn" onclick="go('s4')">←</button><div style="flex:1;"><h1 style="font-size:20px;">Notifications</h1></div><span class="link" style="color:var(--primary);font-size:13px;font-weight:600;cursor:pointer;" onclick="readAll()">Mark all read</span></div>
+    <div class="content" id="notif-list"></div>
   </div>
 
   <!-- Bottom nav -->
@@ -618,9 +646,12 @@
     <button class="nav-item" data-nav="s5" onclick="navTo('s5')"><span class="ico">👥</span>Groups</button>
     <button class="nav-item" data-nav="s7" onclick="navTo('s7')"><span class="ico">🎓</span>Tutors</button>
     <button class="nav-item" data-nav="s10" onclick="navTo('s10')"><span class="ico">📚</span>Resources</button>
+    <button class="nav-item" data-nav="s11" onclick="navTo('s11')"><span class="ico">📅</span>Planner</button>
     <button class="nav-item" data-nav="s12" onclick="navTo('s12')"><span class="ico">👤</span>Profile</button>
   </div>
 
+  <button class="fab" id="fab">+</button>
+  <div class="sheet-bg" id="sheet" onclick="if(event.target===this)closeSheet()"><div class="sheet" id="sheet-body"></div></div>
   <!-- Toast -->
   <div class="toast" id="toast"></div>
 </div>
@@ -700,6 +731,7 @@ function go(id, mode){
   const el = document.getElementById(id);
   if(el){ el.classList.add('active'); el.scrollTop = 0; }
 
+  // bottom nav visibility
   const nav = document.getElementById('bottom-nav');
   if(NAV_SCREENS.includes(id)){
     nav.classList.add('show');
@@ -710,6 +742,7 @@ function go(id, mode){
     nav.classList.remove('show');
   }
 
+  // re-render dynamic screens
   if(id==='s4') renderHome();
   if(id==='s5') renderGroups();
   if(id==='s6') renderGroupDetail();
@@ -923,6 +956,7 @@ function renderGroupDetail(){
   btn.className = 'btn ' + (joined?'btn-success':'btn-primary');
   btn.onclick = ()=>joinGroup(g.id);
 
+  // chat
   const chat = document.getElementById('chat-list');
   if(chat && !chat.dataset.filled){
     chat.dataset.filled = '1';
@@ -938,6 +972,7 @@ function renderGroupDetail(){
       </div>`;
   }
 
+  // resources
   const res = RESOURCES.filter(r=>r.module===g.module);
   document.getElementById('group-resources').innerHTML = res.length
     ? res.map(r=>resourceCard(r)).join('')
@@ -1109,7 +1144,7 @@ function resourceCard(r){
   return `
   <div class="card">
     <div class="row between" style="align-items:flex-start;">
-      <div style="flex:1;">
+      <div style="flex:1;cursor:pointer" onclick="openRes(${r.id})">
         <div class="card-title" style="font-size:15px;">${r.title}</div>
         <div class="card-sub">${r.module} · ${r.type}</div>
         <div class="card-meta"><span>👤 ${r.uploader}</span></div>
@@ -1238,6 +1273,345 @@ renderGroupFilters();
 renderTutorFilters();
 renderResourceFilters();
 renderProfile();
+</script>
+<script>
+/* ============================================================
+   v2: accounts, persistence, real dates, forms, settings
+   ============================================================ */
+const KEY='sb_app_v2';
+let DB=null; try{DB=JSON.parse(localStorage.getItem(KEY))}catch(e){}
+DB=DB||{acc:{},cur:null,data:{}};
+DB.acc['222016515']=DB.acc['222016515']||{name:'Sapalo Johannes',num:'222016515',email:'demo@unam.na',pass:'demo123'};
+const SET={goal:5,notif:true}, CHATS={}, NOTIFS=[];
+const iso=d=>d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0');
+const addDays=n=>{const d=new Date();d.setDate(d.getDate()+n);return iso(d)};
+const nowHM=()=>{const d=new Date();return String(d.getHours()).padStart(2,'0')+':'+String(d.getMinutes()).padStart(2,'0')};
+const esc=s=>String(s).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+const $=id=>document.getElementById(id), val=id=>$(id).value.trim();
+const fld=(l,id,ph,t='text')=>`<div class="field"><label>${l}</label><input class="input" id="${id}" type="${t}" placeholder="${ph}"></div>`;
+const sel=(l,id,o)=>`<div class="field"><label>${l}</label><select class="input" id="${id}">${o.map(x=>`<option>${esc(x)}</option>`).join('')}</select></div>`;
+function ago(t){const m=Math.round((Date.now()-t)/6e4);return m<1?'Just now':m<60?m+' min ago':m<1440?Math.round(m/60)+' h ago':Math.round(m/1440)+' d ago'}
+function persist(){try{localStorage.setItem(KEY,JSON.stringify(DB))}catch(e){}}
+function save(){
+  if(!DB.cur)return;
+  DB.data[DB.cur]={mods:state.user.modules,joined:[...state.joinedGroups],up:[...state.resourceUpvotes],sess:SESSIONS,notifs:NOTIFS,
+    chats:CHATS,set:SET,streak:state.user.streak,last:state.user.last,groups:GROUPS.filter(g=>g.mine),res:RESOURCES.filter(r=>r.mine)};
+  persist();
+}
+function notif(icon,text){ if(SET.notif) NOTIFS.unshift({icon,text,t:Date.now(),read:false}); }
+function loadUser(num){
+  const a=DB.acc[num], d=DB.data[num]||{}; DB.cur=num;
+  Object.assign(state.user,{full:a.name,name:a.name.split(' ')[0],num,email:a.email,modules:d.mods||[]});
+  state.selectedModules=[...state.user.modules];
+  [GROUPS,RESOURCES].forEach(arr=>{for(let i=arr.length-1;i>=0;i--)if(arr[i].mine)arr.splice(i,1)});
+  (d.groups||[]).forEach(g=>GROUPS.push(g)); (d.res||[]).forEach(r=>RESOURCES.push(r));
+  state.joinedGroups=new Set(d.joined||[]);
+  state.joinedGroups.forEach(id=>{const g=GROUPS.find(x=>x.id===id); if(g&&!g.mine)g.members++});
+  state.resourceUpvotes=new Set(d.up||[]);
+  Object.assign(SET,{goal:5,notif:true},d.set||{});
+  Object.keys(CHATS).forEach(k=>delete CHATS[k]); Object.assign(CHATS,d.chats||{});
+  NOTIFS.length=0; SESSIONS.length=0;
+  if(d.sess){ SESSIONS.push(...d.sess); NOTIFS.push(...(d.notifs||[])); }
+  else{
+    SESSIONS.push({id:1,group:'CSC 101 Study Squad',date:addDays(0),time:'14:00',loc:'Library',going:true},
+      {id:2,group:'Linear Algebra Warriors',date:addDays(1),time:'18:00',loc:'Online',going:false},
+      {id:3,group:'Essay Writers Circle',date:addDays(2),time:'10:00',loc:'Library',going:true},
+      {id:4,group:'Physics Problem Solvers',date:addDays(3),time:'15:00',loc:'Library',going:false});
+    NOTIFS.push({icon:'👋',text:'Welcome to StudyBuddy! Join a group or book a tutor to get started.',t:Date.now(),read:false});
+  }
+  const t=iso(new Date()), st=d.streak||0;
+  state.user.streak = d.last===t ? st : (d.last===addDays(-1) ? st+1 : 1); state.user.last=t;
+  state.user.goalTotal=SET.goal;
+  const n=new Date(); state.cal={y:n.getFullYear(),m:n.getMonth()}; state.selectedDate=t;
+  save(); renderModuleChips();
+}
+function weekGoal(){
+  const t=new Date(), a=new Date(t); a.setDate(t.getDate()-((t.getDay()+6)%7)); const b=new Date(a); b.setDate(a.getDate()+6);
+  return SESSIONS.filter(s=>s.going&&s.date>=iso(a)&&s.date<=iso(b)).length;
+}
+
+/* ---------- navigation wrapper ---------- */
+NAV_SCREENS.push('s11');
+const _go=window.go;
+window.go=function(id,mode){
+  _go(id,mode); closeSheet();
+  const fa={s5:'sheetGroup()',s10:'sheetUpload()',s11:'sheetSession()'}[id], f=$('fab');
+  f.classList.toggle('show',!!fa); if(fa)f.setAttribute('onclick',fa);
+  if(id==='s13')renderSettings();
+  if(id==='s14')renderNotifs();
+  if(id==='s3')document.querySelector('#s3 .back-btn').onclick=()=>go(DB.cur&&state.user.modules.length?'s13':'s2');
+};
+
+/* ---------- auth & password reset (added missing interactive flow) ---------- */
+window.submitSignup=function(){
+  const name=val('su-name'),num=val('su-num'),email=val('su-email').toLowerCase(),pass=$('su-pass').value;
+  let ok=true;
+  const chk=(id,c,msg)=>{const e=$('err-'+id);if(msg)e.textContent=msg;e.classList.toggle('show',!c);$(id).classList.toggle('error',!c);if(!c)ok=false};
+  chk('su-name',name.length>=2);
+  chk('su-num',/^\d{6,}$/.test(num)&&!DB.acc[num],DB.acc[num]?'This student number is already registered':'Please enter a valid student number');
+  chk('su-email',/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(email)&&!Object.values(DB.acc).some(a=>a.email===email),'Please enter a valid, unused email');
+  chk('su-pass',pass.length>=6);
+  if(!ok){toast('Please fix the errors above','error');return}
+  DB.acc[num]={name,num,email,pass}; loadUser(num); state.selectedModules=[]; renderModuleChips();
+  toast('Account created ✓','success'); setTimeout(()=>go('s3'),400);
+};
+window.submitLogin=function(){
+  const id=val('li-id'),pass=$('li-pass').value; let ok=true;
+  const chk=(e,i,c)=>{$(e).classList.toggle('show',!c);$(i).classList.toggle('error',!c);if(!c)ok=false};
+  chk('err-li-id','li-id',id.length>=3); chk('err-li-pass','li-pass',pass.length>=1);
+  if(!ok){toast('Please fill in all fields','error');return}
+  const a=DB.acc[id]||Object.values(DB.acc).find(x=>x.email===id.toLowerCase());
+  if(!a||a.pass!==pass){$('err-li-pass').textContent='Incorrect student number/email or password';chk('err-li-pass','li-pass',false);toast('Login failed','error');return}$('err-li-pass').textContent='Please enter your password';
+  loadUser(a.num); toast('Welcome back ✓','success');
+  setTimeout(()=>go(state.user.modules.length?'s4':'s3'),400);
+};
+window.forgotPass=function(){
+  openSheet(`<h2>Reset Password</h2>
+    <div class="card-sub" style="margin-bottom:14px">Enter your registered student number or email address.</div>
+    ${fld('Student Number or Email','fp-id','e.g. 222016515')}
+    ${fld('New Password','fp-pass','Min. 6 characters','password')}
+    <button class="btn btn-primary" onclick="submitResetPass()">Update Password</button>`);
+};
+window.submitResetPass=function(){
+  const id=val('fp-id'), pass=$('fp-pass');
+  const a=DB.acc[id]||Object.values(DB.acc).find(x=>x.email===id.toLowerCase());
+  if(!a){toast('Account not found','error');return}
+  if(!pass || pass.value.length < 6){toast('Password must be at least 6 characters','error');return}
+  a.pass = pass.value;
+  persist();
+  closeSheet();
+  toast('Password updated successfully ✓','success');
+};
+function logout(){ if(!confirm('Log out of StudyBuddy?'))return; save(); DB.cur=null; persist(); location.reload(); }
+function resetData(){ if(!confirm('Reset all your groups, sessions, chats and uploads?'))return; delete DB.data[DB.cur]; persist(); location.reload(); }
+const _sm=window.submitModules; window.submitModules=function(){_sm();save()};
+
+/* ---------- sheets ---------- */
+function openSheet(h){$('sheet-body').innerHTML='<div class="grab"></div>'+h;$('sheet').classList.add('show')}
+function closeSheet(){$('sheet').classList.remove('show')}
+function sheetSession(){
+  const gs=[...GROUPS].sort((a,b)=>state.joinedGroups.has(b.id)-state.joinedGroups.has(a.id)).map(g=>g.name);
+  openSheet(`<h2>New study session</h2>${sel('Group','ns-g',gs)}${fld('Date','ns-d','','date')}${fld('Time','ns-t','','time')}${fld('Location','ns-l','e.g. Library, Room 4')}
+    <button class="btn btn-primary" onclick="addSession()">Create session</button>`);
+  $('ns-d').value=state.selectedDate>=iso(new Date())?state.selectedDate:iso(new Date()); $('ns-d').min=iso(new Date());$('ns-t').value='15:00';
+}
+function addSession(){
+  const g=val('ns-g'),d=val('ns-d'),t=val('ns-t'),l=val('ns-l')||'TBA';
+  if(!d||!t||d<iso(new Date())){toast('Pick a valid future date and time','error');return}
+  SESSIONS.push({id:Date.now(),group:g,date:d,time:t,loc:l,going:true,mine:true});
+  state.selectedDate=d; const dt=new Date(d+'T00:00:00'); state.cal={y:dt.getFullYear(),m:dt.getMonth()};
+  notif('📅','Session created: '+g); save(); closeSheet(); renderPlanner(); toast('Session created ✓','success');
+}
+function sheetUpload(){
+  openSheet(`<h2>Upload a resource</h2>${fld('Title','nr-t','e.g. CSC 101 — Week 4 notes')}${sel('Module','nr-m',MODULES.map(m=>m.code))}${sel('Type','nr-y',['Notes','Summary','Past Paper'])}
+    <button class="btn btn-primary" onclick="addRes()">Upload</button>`);
+}
+function addRes(){
+  const t=val('nr-t'); if(t.length<3){toast('Give your resource a title','error');return}
+  RESOURCES.unshift({id:Date.now(),title:t,module:val('nr-m'),type:val('nr-y'),uploader:state.user.name,upvotes:0,mine:true});
+  notif('📤','You uploaded: '+t); save(); closeSheet(); renderResources(); toast('Resource uploaded ✓','success');
+}
+function sheetGroup(){
+  openSheet(`<h2>Create a study group</h2>${fld('Group name','ng-n','e.g. CSC 101 Night Owls')}${sel('Module','ng-m',MODULES.map(m=>m.code))}${fld('Location','ng-l','e.g. Library')}${fld('Meeting time','ng-t','e.g. Fridays 14:00')}${fld('Description','ng-d','What will you study?')}
+    <button class="btn btn-primary" onclick="addGroup()">Create group</button>`);
+}
+function addGroup(){
+  const n=val('ng-n'); if(n.length<3){toast('Give your group a name','error');return}
+  const g={id:Date.now(),name:n,module:val('ng-m'),members:1,loc:val('ng-l')||'TBA',time:val('ng-t')||'TBA',desc:val('ng-d')||'A new study group.',mine:true};
+  GROUPS.unshift(g); state.joinedGroups.add(g.id); notif('👥','You created '+n); save(); closeSheet(); renderGroups(); toast('Group created ✓','success');
+}
+
+/* ---------- resource document preview sheet (added missing previewer) ---------- */
+window.openRes=function(id){
+  const r=RESOURCES.find(x=>x.id===id); if(!r)return;
+  openSheet(`<h2>📄 ${esc(r.title)}</h2>
+    <div class="card-sub" style="margin-bottom:12px">${r.module} · ${r.type} · Uploaded by ${esc(r.uploader)}</div>
+    <div class="card" style="background:#F8FAFC;margin-bottom:16px;">
+      <div style="font-size:13px;color:var(--muted);line-height:1.6"><b>Document Preview:</b><br>This study document covers comprehensive notes, diagrams, and practice questions for ${r.module}. Verified by peer review.</div>
+    </div>
+    <button class="btn btn-primary" style="margin-bottom:8px" onclick="toast('Downloading file... ⬇️','success');closeSheet()">Download File (PDF)</button>
+    <button class="btn btn-ghost" onclick="closeSheet()">Close</button>`);
+};
+const _rc=window.resourceCard;
+window.resourceCard=function(r){return _rc(r).replace('<div style="flex:1;">',`<div style="flex:1;cursor:pointer" onclick="openRes(${r.id})">`)};
+const _up=window.upvote; window.upvote=function(id){_up(id);save()};
+
+/* ---------- groups & chat ---------- */
+const chatFor=id=>CHATS[id]||(CHATS[id]=[{who:'Titus',text:'Hey everyone, are we meeting this week?'},{who:'Mpho',text:'Yes! Bring past papers 📚'}]);
+function renderChat(){
+  const g=state.selectedGroup; if(!g)return;
+  $('chat-list').innerHTML=chatFor(g.id).map(x=>x.me?`<div class="bub me">${esc(x.text)}<small>${x.t||''}</small></div>`:`<div class="bub"><b>${esc(x.who)}</b><br>${esc(x.text)}</div>`).join('');
+}
+const _rgd=window.renderGroupDetail;
+window.renderGroupDetail=function(){
+  _rgd(); const g=state.selectedGroup; if(!g)return; renderChat();
+  if(state.joinedGroups.has(g.id)){const b=$('g-join-btn');b.textContent='Leave Group';b.className='btn btn-secondary';b.onclick=()=>leaveGroup(g.id)}
+};
+window.sendMsg=function(){
+  const g=state.selectedGroup,v=val('chat-input'); if(!g||!v)return;
+  if(!state.joinedGroups.has(g.id)){toast('Join the group to chat','error');return}
+  chatFor(g.id).push({me:true,text:v,t:nowHM()}); $('chat-input').value=''; save(); renderChat();
+  const c=$('chat-list').parentElement; c.scrollTop=c.scrollHeight;
+};
+const _jg=window.joinGroup;
+window.joinGroup=function(id){
+  id=id||state.selectedGroup?.id; const was=state.joinedGroups.has(id); _jg(id);
+  if(!was&&state.joinedGroups.has(id)){notif('👥','You joined '+GROUPS.find(x=>x.id===id).name);save()}
+};
+function leaveGroup(id){
+  const g=GROUPS.find(x=>x.id===id); if(!g||!confirm('Leave '+g.name+'?'))return;
+  state.joinedGroups.delete(id); g.members=Math.max(0,g.members-1); save(); toast('You left the group'); renderGroupDetail(); renderGroups();
+}
+
+/* ---------- tutors & booking (with slot release on cancel) ---------- */
+const _rtp=window.renderTutorProfile;
+window.renderTutorProfile=function(){
+  if(!state.bookDate)state.bookDate=iso(new Date());
+  _rtp(); const t=state.selectedTutor; if(!t)return;
+  const chips=[...Array(7)].map((_,i)=>{const k=addDays(i);return `<button class="chip ${k===state.bookDate?'selected':''}" style="flex-shrink:0" onclick="pickDate('${k}')">${i?i==1?'Tomorrow':formatDate(k):'Today'}</button>`}).join('');
+  document.querySelector('#tutor-profile-content .section-title').insertAdjacentHTML('beforebegin',`<div class="section-title">Select a date</div><div style="display:flex;gap:8px;overflow-x:auto;padding-bottom:4px;">${chips}</div>`);
+  document.querySelectorAll('#slot-grid .slot').forEach(b=>{
+    const s=b.textContent, past=state.bookDate===iso(new Date())&&s<=nowHM(), booked=SESSIONS.some(x=>x.tutor===t.id&&x.date===state.bookDate&&x.time===s);
+    if(past||booked){b.classList.add('unavailable');b.removeAttribute('onclick')}
+  });
+};
+function pickDate(k){state.bookDate=k;state.selectedSlot=null;renderTutorProfile()}
+window.bookSession=function(){
+  if(!state.selectedSlot){toast('Please select a time slot','error');return}
+  const t=state.selectedTutor, d=state.bookDate, dl=new Date(d+'T00:00:00').toLocaleDateString('en-GB',{weekday:'short',day:'numeric',month:'short',year:'numeric'});
+  SESSIONS.push({id:Date.now(),group:'Tutoring · '+t.name,date:d,time:state.selectedSlot,loc:'Campus / Online',going:true,tutor:t.id});
+  notif('🎓',`Booked ${t.name} on ${dl} at ${state.selectedSlot}`); save();
+  $('confirm-text').innerHTML=`Your session with <b>${t.name}</b> has been confirmed for <b>${dl} at ${state.selectedSlot}</b>.`;
+  $('confirm-card').innerHTML=`<div class="row"><div class="avatar sm">${t.name[0]}</div><div><div style="font-weight:700;">${t.name}</div><div style="font-size:12px;color:var(--muted);">${t.module}</div></div></div>
+    <div style="margin-top:12px;font-size:14px;line-height:1.8;"><div>📅 ${dl}</div><div>🕐 ${state.selectedSlot}</div><div>💰 ${t.rate}</div></div>`;
+  state.selectedSlot=null; go('s9');
+};
+function cancelSession(id){
+  const s=SESSIONS.find(x=>x.id===id); if(!s||!confirm('Remove "'+s.group+'" on '+formatDate(s.date)+'?'))return;
+  SESSIONS.splice(SESSIONS.indexOf(s),1); notif('🗑️','Removed: '+s.group); save(); renderPlanner(); renderProfile(); toast('Session cancelled & slot released');
+}
+
+/* ---------- planner ---------- */
+function calNav(n){let{y,m}=state.cal;m+=n;if(m<0){m=11;y--}if(m>11){m=0;y++}state.cal={y,m};renderPlanner()}
+window.renderPlanner=function(){
+  const {y,m}=state.cal, first=(new Date(y,m,1).getDay()+6)%7, n=new Date(y,m+1,0).getDate(), td=iso(new Date());
+  $('cal-month').textContent=new Date(y,m,1).toLocaleDateString('en-GB',{month:'long',year:'numeric'});
+  let h=['M','T','W','T','F','S','S'].map(d=>`<div style="text-align:center;font-size:11px;font-weight:700;color:var(--muted);padding:4px 0;">${d}</div>`).join('')+'<div class="cal-day empty"></div>'.repeat(first);
+  for(let d=1;d<=n;d++){const k=`${y}-${String(m+1).padStart(2,'0')}-${String(d).padStart(2,'0')}`;
+    h+=`<div class="cal-day ${k===td?'today':''} ${SESSIONS.some(s=>s.date===k)?'has-session':''} ${k===state.selectedDate?'selected':''}" onclick="selectDate('${k}')">${d}</div>`}
+  $('cal-grid').innerHTML=h; $('selected-date-label').textContent=formatDate(state.selectedDate);
+  const list=SESSIONS.filter(s=>s.date===state.selectedDate).sort((a,b)=>a.time.localeCompare(b.time));
+  $('planner-sessions').innerHTML=list.length?list.map(s=>{
+    const past=s.date<td;
+    const rsvp=s.tutor?'':`<button class="btn ${s.going?'btn-success':'btn-secondary'}" style="margin-top:10px;height:44px;font-size:14px;" onclick="toggleRSVP(${s.id})">${s.going?'✓ Going':'RSVP'}</button>`;
+    const del=(s.tutor||s.mine)?`<button class="btn btn-ghost" style="height:40px;font-size:13px;color:var(--error)" onclick="cancelSession(${s.id})">${s.tutor?'Cancel booking':'Delete session'}</button>`:'';
+    return `<div class="card"><div class="card-title" style="font-size:15px;">${s.tutor?'🎓 ':''}${esc(s.group)}</div><div class="card-sub">${s.time} · ${esc(s.loc)}</div>${past?'<div class="card-sub" style="margin-top:8px">Completed</div>':rsvp+del}</div>`}).join('')
+    :'<div class="empty"><span class="em">📅</span>No sessions on this day</div>';
+};
+const _rs=window.toggleRSVP; window.toggleRSVP=function(id){_rs(id);save()};
+
+/* ---------- home ---------- */
+window.renderHome=function(){
+  const u=state.user,h=new Date().getHours(),td=iso(new Date());
+  u.goal=weekGoal(); u.goalTotal=SET.goal;
+  $('home-name').textContent=u.name; $('home-avatar').textContent=u.name[0].toUpperCase();
+  $('home-sub').textContent=(h<12?'Good morning':h<18?'Good afternoon':'Good evening')+' — let\'s make today productive';$('streak-num').textContent=`🔥 ${u.streak}`; $('weekly-goal').textContent=`${u.goal}/${u.goalTotal}`;
+  $('goal-bar').style.width=Math.min(100,u.goal/u.goalTotal*100)+'%';
+  const unread=NOTIFS.filter(n=>!n.read).length, bb=$('bell-badge'); bb.textContent=unread; bb.style.display=unread?'flex':'none';
+  const up=SESSIONS.filter(s=>s.date>=td).sort((a,b)=>(a.date+a.time).localeCompare(b.date+b.time)).slice(0,3);
+  $('home-sessions').innerHTML=up.length?up.map(s=>`<div class="card tap" onclick="state.selectedDate='${s.date}';go('s11')"><div class="row between"><div><div class="card-title" style="font-size:15px;">${s.tutor?'🎓 ':''}${esc(s.group)}</div><div class="card-sub">${s.date===td?'Today':formatDate(s.date)} · ${s.time} · ${esc(s.loc)}</div></div><div style="font-size:20px;">${s.going?'✅':'⏳'}</div></div></div>`).join(''):'<div class="empty"><span class="em">📅</span>No upcoming sessions</div>';
+  const mine=GROUPS.filter(g=>state.joinedGroups.has(g.id));
+  const list=mine.length?mine.slice(0,3):GROUPS.filter(g=>u.modules.includes(g.module)).slice(0,2);
+  $('home-groups').innerHTML=(mine.length||!list.length?'':'<div class="card-sub" style="margin-bottom:8px">You haven\'t joined a group yet — suggested for your modules:</div>')+
+    (list.length?list.map(g=>`<div class="card tap" onclick="openGroup(${g.id})"><div class="row between"><div><div class="card-title" style="font-size:15px;">${esc(g.name)}</div><div class="card-sub">${g.module} · ${g.members} members</div></div><div style="font-size:20px;">👥</div></div></div>`).join(''):'<div class="empty"><span class="em">👥</span>No groups yet — tap Browse</div>');
+};
+
+/* ---------- notifications ---------- */
+function renderNotifs(){
+  $('notif-list').innerHTML=NOTIFS.length?NOTIFS.map(n=>`<div class="card row"><div style="font-size:24px">${n.icon}</div><div style="flex:1"><div style="font-size:14px;font-weight:600">${esc(n.text)}</div><div class="card-sub">${ago(n.t)}</div></div>${n.read?'':'<span class="dot"></span>'}</div>`).join(''):'<div class="empty"><span class="em">🔔</span>You\'re all caught up</div>';
+}
+function readAll(){NOTIFS.forEach(n=>n.read=true);save();renderNotifs();renderHome()}
+
+/* ---------- profile & settings (with module deletion/removal) ---------- */
+const _rp=window.renderProfile;
+window.renderProfile=function(){
+  _rp(); const u=state.user; if(!u.full)return;
+  $('prof-name').textContent=u.full; $('prof-num').textContent=u.num+(u.email?' · '+u.email:'');
+  const td=iso(new Date()), tb=SESSIONS.filter(s=>s.tutor), going=SESSIONS.filter(s=>s.going&&!s.tutor).length, ups=RESOURCES.filter(r=>r.mine).length;
+  const ach=[['🏆','First Group Joined',state.joinedGroups.size>0,'Join a study group'],['🔥','5-Day Streak',u.streak>=5,'Open the app 5 days in a row'],['📤','Contributor',ups>0,'Upload a resource'],['🎓','Booked a Tutor',tb.length>0,'Book your first tutor']];
+  const up=tb.filter(s=>s.date>=td).sort((a,b)=>(a.date+a.time).localeCompare(b.date+b.time));
+  
+  // Render modules with a removal option
+  const modsHtml = u.modules.length ? u.modules.map(m=>`<span class="chip selected" style="gap:6px;">${m} <span style="font-size:12px;cursor:pointer;opacity:0.8;" onclick="removeUserModule('${m}')">✕</span></span>`).join('') : '<span class="card-sub">No modules selected</span>';
+  $('prof-modules').innerHTML = modsHtml;
+
+  $('prof-extra').innerHTML=`<div class="stats" style="margin-top:6px"><div class="card stat"><b>${state.joinedGroups.size}</b><span>Groups</span></div><div class="card stat"><b>${going}</b><span>Sessions</span></div><div class="card stat"><b>${ups}</b><span>Uploads</span></div></div>
+    <div class="section-title">My Tutor Bookings</div>${up.length?up.map(s=>`<div class="card row between"><div><div class="card-title" style="font-size:15px">${esc(s.group.replace('Tutoring · ',''))}</div><div class="card-sub">${formatDate(s.date)} ·${s.time}</div></div><button class="chip" onclick="cancelSession(${s.id})">Cancel</button></div>`).join(''):'<div class="card-sub">No upcoming bookings</div>'}
+    <div class="section-title">Achievements</div>${ach.map(a=>`<div class="card row" style="gap:14px;${a[2]?'':'opacity:.45'}"><div style="font-size:28px">${a[2]?a[0]:'🔒'}</div><div><div style="font-weight:700">${a[1]}</div><div style="font-size:12px;color:var(--muted)">${a[2]?'Unlocked':a[3]}</div></div></div>`).join('')}`;
+};
+
+window.removeUserModule=function(code){
+  const idx = state.user.modules.indexOf(code);
+  if(idx >= 0) state.user.modules.splice(idx, 1);
+  const sIdx = state.selectedModules.indexOf(code);
+  if(sIdx >= 0) state.selectedModules.splice(sIdx, 1);
+  save();
+  renderProfile();
+  toast('Module removed');
+};
+
+function renderSettings(){
+  $('settings-body').innerHTML=`<div class="card"><div class="card-title" style="margin-bottom:10px">Account</div>${fld('Full name','st-name','Your name')}<button class="btn btn-primary" style="height:44px" onclick="saveName()">Save name</button></div>
+    <div class="card"><div class="card-title">Weekly study goal</div><div class="card-sub" style="margin-bottom:10px">Sessions per week</div><div class="chip-row" style="margin:0">${[3,5,7].map(n=>`<button class="chip ${SET.goal===n?'selected':''}" onclick="setGoal(${n})">${n}</button>`).join('')}</div></div>
+    <div class="card row between"><div><div class="card-title">Notifications</div><div class="card-sub">Reminders and activity</div></div><div class="switch ${SET.notif?'on':''}" onclick="toggleNotif()"></div></div>
+    <div class="card tap row between" onclick="go('s3')"><div class="card-title" style="margin:0">Edit my modules</div><span>›</span></div>
+    <button class="btn btn-secondary" style="margin-top:8px" onclick="logout()">Log out</button>
+    <button class="btn btn-danger" onclick="resetData()">Reset my data</button>
+    <div class="card-sub" style="text-align:center;margin-top:18px">StudyBuddy v2.1</div>`;
+  $('st-name').value=state.user.full||'';
+}
+function saveName(){const v=val('st-name');if(v.length<2){toast('Enter your name','error');return}DB.acc[DB.cur].name=v;state.user.full=v;state.user.name=v.split(' ')[0];persist();toast('Name updated ✓','success')}
+function setGoal(n){SET.goal=n;state.user.goalTotal=n;save();renderSettings()}
+function toggleNotif(){SET.notif=!SET.notif;save();renderSettings()}
+
+/* ============================================================
+   v2.1: search / add any UNAM module
+   ============================================================ */
+MODULES.push({code:'COS3722',name:'Virtualization Technology'},{code:'S3632DD',name:'Advanced Databases'});
+const syncFilters=()=>MODULES.forEach(m=>[GROUP_FILTERS,TUTOR_FILTERS,RESOURCE_FILTERS].forEach(a=>{if(!a.includes(m.code))a.push(m.code)}));
+const normCode=c=>c.toUpperCase().replace(/[^A-Z0-9 \-]/g,'').replace(/\s+/g,' ').trim();
+window.renderModuleChips=function(filter=''){
+  const w=$('module-chips'); if(!w)return; const f=filter.trim().toLowerCase();
+  const hit=MODULES.filter(m=>!f||m.code.toLowerCase().includes(f)||m.name.toLowerCase().includes(f)||m.code.toLowerCase().replace(/[ \-]/g,'').includes(f.replace(/[ \-]/g,'')));
+  const keep=state.selectedModules.map(c=>MODULES.find(m=>m.code===c)).filter(m=>m&&!hit.includes(m));
+  let h=[...hit,...keep].map(m=>`<button class="chip ${state.selectedModules.includes(m.code)?'selected':''}" onclick="toggleModule('${m.code}')"><b>${m.code}</b>&nbsp;<span style="font-weight:500;font-size:12px">${esc(m.name)}</span></button>`).join('');
+  if(f.length>=3&&!MODULES.some(m=>m.code.toLowerCase()===f))
+    h+=`<button class="chip" style="border-style:dashed;color:var(--primary);border-color:var(--primary)" onclick="sheetModule()">➕ ${hit.length?'Not listed? Add':'No match — add'} “${esc(filter.trim())}”</button>`;
+  w.innerHTML=h; $('module-count').textContent=state.selectedModules.length;
+};
+function sheetModule(){
+  const q=$('s3').querySelector('.input').value.trim(), isCode=/\d/.test(q)&&q.length<=12;
+  openSheet(`<h2>Add a module</h2><div class="card-sub" style="margin-bottom:14px">Use the code exactly as on your UNAM timetable or study guide.</div>${fld('Module code','nm-c','e.g. COS3722')}${fld('Module name','nm-n','e.g. Virtualization Technology')}<button class="btn btn-primary" onclick="addModule()">Add module</button>`);
+  if(isCode)$('nm-c').value=normCode(q); else$('nm-n').value=q;
+}
+function addModule(){
+  const code=normCode(val('nm-c')), name=val('nm-n');
+  if(!/^[A-Z0-9][A-Z0-9 \-]{2,11}$/.test(code)){toast('Enter a valid module code','error');return}
+  if(name.length<3){toast('Enter the module name','error');return}
+  if(!MODULES.some(m=>m.code===code)){MODULES.push({code,name,custom:true});syncFilters()}
+  if(!state.selectedModules.includes(code))state.selectedModules.push(code);
+  save(); closeSheet(); $('s3').querySelector('.input').value=''; renderModuleChips(); toast(code+' added ✓','success');
+}
+const _sv=window.save; window.save=function(){_sv(); if(DB.cur&&DB.data[DB.cur]){DB.data[DB.cur].cmods=MODULES.filter(m=>m.custom);persist()}};
+const _lu=window.loadUser;
+window.loadUser=function(n){
+  for(let i=MODULES.length-1;i>=0;i--)if(MODULES[i].custom)MODULES.splice(i,1);
+  ((DB.data[n]||{}).cmods||[]).forEach(m=>MODULES.push(m)); syncFilters(); _lu(n);
+};
+syncFilters();
+
+/* ---------- boot: restore session ---------- */
+if(DB.cur&&DB.acc[DB.cur]){ loadUser(DB.cur); go(state.user.modules.length?'s4':'s3'); }
 </script>
 </body>
 </html>
